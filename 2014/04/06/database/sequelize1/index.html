@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Node.js ORM 框架 sequelize 入门教程 1 | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="导言现在Node.js 上面的关系数据库ORM 框架有  sequelize node-orm2 knex  其中以sequelize的关注度最高…因为,当初,我就是看着sequelize 的star 数最高..于是就入坑了..对了,国内的话,前端乱炖的数据库ORM用的就是sequelize">
+<meta name="keywords" content="nodejs,sequelize">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js ORM 框架 sequelize 入门教程 1">
+<meta property="og:url" content="http://blog.gfdsa.net/2014/04/06/database/sequelize1/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="导言现在Node.js 上面的关系数据库ORM 框架有  sequelize node-orm2 knex  其中以sequelize的关注度最高…因为,当初,我就是看着sequelize 的star 数最高..于是就入坑了..对了,国内的话,前端乱炖的数据库ORM用的就是sequelize">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node.js ORM 框架 sequelize 入门教程 1">
+<meta name="twitter:description" content="导言现在Node.js 上面的关系数据库ORM 框架有  sequelize node-orm2 knex  其中以sequelize的关注度最高…因为,当初,我就是看着sequelize 的star 数最高..于是就入坑了..对了,国内的话,前端乱炖的数据库ORM用的就是sequelize">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-database/sequelize1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/04/06/database/sequelize1/" class="article-date">
+  	<time datetime="2014-04-05T16:00:00.000Z" itemprop="datePublished">4月 6 2014</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sequelize/">sequelize</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Node.js ORM 框架 sequelize 入门教程 1
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><p>现在Node.js 上面的关系数据库ORM 框架有</p>
+<ul>
+<li><a href="https://github.com/sequelize/sequelize" target="_blank" rel="noopener">sequelize</a></li>
+<li><a href="http://dresende.github.io/node-orm2/" target="_blank" rel="noopener">node-orm2</a></li>
+<li><a href="http://knexjs.org/" target="_blank" rel="noopener">knex</a></li>
+</ul>
+<p>其中以sequelize的关注度最高…因为,当初,我就是看着sequelize 的star 数最高..于是就入坑了..对了,国内的话,前端乱炖的数据库ORM用的就是sequelize</p>
+<a id="more"></a>
+<h2 id="Sequelize-历史"><a href="#Sequelize-历史" class="headerlink" title="Sequelize 历史"></a>Sequelize 历史</h2><p>对于我来说从2013年初到现在 接触sequelize应该有接近一年了..在这过去一年里sequelize的进步还是挺大的….在以前的版本.sequelize 对于关联表关系有着一些异常奇异的问题,这也导致,后边sequelize 的几个作者,下定决心做好单测…有兴趣的朋友可以去围观一下sequelize的单元测试,就现在而言,sequelize应该可以算能用了,所以,也决定写些东西推广一下sequelize,让一些人更加方便的入坑…</p>
+<p>在sequelize开发历史中,在1.7 的时候,开了一个2.0 的分支,这两个分支的关系,可能有些人就混乱了,这里说一下,1.7 和 2.0 的版本是同步开发的,在1.7 正式出来的时候,1.7 和 2.0 的代码是一样的.不过,现在1.7已经正式发布,1.7和2.0 可能开始不同步了,所以,大家为了省事还是用1.7吧,至于2.0什么时候开发完..我估计得今年年底吧.</p>
+<h2 id="Let’s-start"><a href="#Let’s-start" class="headerlink" title="Let’s start!"></a>Let’s start!</h2><p>先安装一下sequelize 的命令行工具,方便一些初始化工作</p>
+<blockquote>
+<p>Windows <figure class="highlight plain"><figcaption><span>install -g sequelize```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; *nix ```sudo npm install -g sequelize</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>安装完以后,我们之间在项目目录运行</p>
+<blockquote>
+<figure class="highlight plain"><figcaption><span>-i```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">配置文件就会自动帮我们生成好了</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">├───config</span><br><span class="line">└───migrations</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>config 目录下的config.json 就是我们需要根据数据的配置进行修改的文件了</p>
+<p>接下来我们安装用到的包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install sequelize --save</span><br><span class="line">npm install sqlite3 --save</span><br><span class="line">npm install mysql --save</span><br></pre></td></tr></table></figure>
+<p>sequelize 是支持多方言数据库(MySQL, MariaDB, SQLite and PostgreSQL)的ORM 框架.其中对于MariaDB 的支持..貌似就这一家了(不过用MariaDB应该不多吧).</p>
+<p>为了展示sequelize 对于多数据库的支持,我使用两个不同的数据库生产环境用mysql,测试开发用sqlite3.</p>
+<p>然后去修改 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js</span><br><span class="line">  &quot;development&quot;: &#123;</span><br><span class="line">      &quot;username&quot;: null,</span><br><span class="line">      &quot;password&quot;: null,</span><br><span class="line">      &quot;database&quot;: &quot;database_development&quot;,</span><br><span class="line">      &quot;option&quot; : &#123;</span><br><span class="line">          &quot;dialect&quot;: &quot;sqlite&quot;,</span><br><span class="line">          &quot;storage&quot;:  &quot;test.sqlite&quot;,</span><br><span class="line">          &quot;define&quot;: &#123;</span><br><span class="line">              &quot;timestamps&quot;: false,</span><br><span class="line">              &quot;freezeTableName&quot;: true</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于sqlite3而言,直接把dialect 改为sqlite即可,如果是MySQL的,注意username,password,database一个都不能少!</p>
+<p>对于define 里面的东西.这里先演示两个. timestamps 对于表是否自动添加createAt 和 updateAt这两个字段,如果你用不上的话,就关掉吧. freezeTableName, 是冻结表名,默认sequelize会帮你的定义的表名字自动加上s..所以,如果你用不上的话,就关掉吧.关于更多的配置请看<a href="http://sequelizejs.com/docs/latest/usage#options" target="_blank" rel="noopener">http://sequelizejs.com/docs/latest/usage#options</a></p>
+<h2 id="Let’s-run"><a href="#Let’s-run" class="headerlink" title="Let’s run!"></a>Let’s run!</h2><p>做了这么一番准备,现在开始让我们开始用sequelize进行数据库访问吧!</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Sequelize = <span class="built_in">require</span>(<span class="string">'sequelize'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> node_env = process.env.NODE_ENV ? process.env.NODE_ENV : <span class="string">'development'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//根据系统环境载入我们的配置</span></span><br><span class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'../config/config'</span>)[node_env];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> dbStroage = <span class="keyword">new</span> Sequelize(config.database, config.username, config.password, config.option);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义我们的User 表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> User = dbStroage.define(<span class="string">'user'</span>, &#123;</span><br><span class="line">    username: Sequelize.STRING,</span><br><span class="line">    password: Sequelize.STRING</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果是第一次运行的话,需要用sync 方法创建表</span></span><br><span class="line">dbStroage.sync()</span><br><span class="line">    .success(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">//用sequelize创建我们第一个用户</span></span><br><span class="line">        User.create(&#123;</span><br><span class="line">            username : <span class="string">'youxiachai'</span>,</span><br><span class="line">            password : <span class="string">'123456'</span></span><br><span class="line">        &#125;).done(<span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>)</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(err)</span><br><span class="line">                <span class="built_in">console</span>.log(result)</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .error(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>对于sequelize的配置运行,就到此结束了,下次我们讨论一下如何用sequelize 做一个Restful风格的应用.</p>
+<p>本节完整代码 <a href="https://github.com/youxiachai/sequelize-lesson" target="_blank" rel="noopener">https://github.com/youxiachai/sequelize-lesson</a></p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/05/11/nodejs/swaggerapi/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          时髦的API文档生成方式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/03/05/html5/phonegapandwebapp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">从零构建webapps</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="database/sequelize1" data-title="Node.js ORM 框架 sequelize 入门教程 1" data-url="http://blog.gfdsa.net/2014/04/06/database/sequelize1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

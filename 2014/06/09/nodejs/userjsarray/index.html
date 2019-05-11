@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>JS 数组的奇妙用法 | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言一般语言的数组的大多除了存数值,还是存数值,不过对于js而已,数组的用法异常的灵活,本博文,就简单介绍几种技巧.">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 数组的奇妙用法">
+<meta property="og:url" content="http://blog.gfdsa.net/2014/06/09/nodejs/userjsarray/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="前言一般语言的数组的大多除了存数值,还是存数值,不过对于js而已,数组的用法异常的灵活,本博文,就简单介绍几种技巧.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.369Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS 数组的奇妙用法">
+<meta name="twitter:description" content="前言一般语言的数组的大多除了存数值,还是存数值,不过对于js而已,数组的用法异常的灵活,本博文,就简单介绍几种技巧.">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-nodejs/userjsarray" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/06/09/nodejs/userjsarray/" class="article-date">
+  	<time datetime="2014-06-08T16:00:00.000Z" itemprop="datePublished">6月 9 2014</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS 数组的奇妙用法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一般语言的数组的大多除了存数值,还是存数值,不过对于js而已,数组的用法异常的灵活,本博文,就简单介绍几种技巧.</p>
+<a id="more"></a>
+<h2 id="函数队列"><a href="#函数队列" class="headerlink" title="函数队列"></a>函数队列</h2><p>在敲代码,我们首先要学习JS对象的两个方法,这两个方法在整个js编程中非常重要!</p>
+<ul>
+<li>call <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call</a></li>
+<li>apply <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply</a></li>
+</ul>
+<p>阅读完<code>call</code>和<code>apply</code> 的用法后,就开始我们的实例演练.</p>
+<p>有这么一个关于积分规则的需求</p>
+<ol>
+<li>登录5分</li>
+<li>发帖1分</li>
+<li>被删帖-10分</li>
+</ol>
+<p>嗯,思考了十秒以后,你应该会敲下如下代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> totalPoint = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> action = <span class="string">''</span></span><br><span class="line"><span class="keyword">switch</span> (action) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'登录'</span>:</span><br><span class="line">        totalPoint +=<span class="number">5</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'发帖'</span>:</span><br><span class="line">        totalPoint +=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'被删帖'</span>:</span><br><span class="line">        totalPoint -=<span class="number">10</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span> :</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>非常直观合理,简单快速实现了我们的需求,增加规则,我们只要增加case就好了…….</p>
+<p>不过十几日后..</p>
+<p>你的PM想到了20条规则(还有诸如,发帖了10个贴就不能增加积分之类的,触发机制.),于是你的<code>switch</code>代码有接近20条以上的分支,而且,每个分支的积分规则都要注意不要放错位置.</p>
+<p>还记得,我们前面学习的<code>call</code> 和 <code>apply</code> 吗,那现在我们用js数组就能够优雅的处理好.</p>
+<p>约定:</p>
+<ul>
+<li>每个规则设定的变量都是一个拥有一个参数,和一个有两个参数的函数.</li>
+<li>每个规则参数的变量都是一个拥有长度为2的数组,第一个为对象,第二个拥有两个参数的函数.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//规则设定</span></span><br><span class="line"><span class="keyword">var</span> taskQueue = [];</span><br><span class="line"><span class="comment">//规则参数</span></span><br><span class="line"><span class="keyword">var</span> ruleQuery = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> totalPoint = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//参数预置和结果输出</span></span><br><span class="line"><span class="keyword">var</span> rule1 = [<span class="string">''</span>, <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ruleQuery[<span class="string">'rule1'</span>] = rule1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//积分规则</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> task1  = <span class="function"><span class="keyword">function</span> (<span class="params">params, done</span>) </span>&#123;</span><br><span class="line">	done(totalPoint += <span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">taskQueue[<span class="string">'登录'</span>] = task1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> action = <span class="string">'登录'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//运行预定规则任务</span></span><br><span class="line">taskQueue[action].apply(<span class="literal">null</span>, ruleQuery[<span class="string">'rule1'</span>]);</span><br><span class="line">&gt; <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>乍看,好像比<code>switch</code>的方式复杂不小,这种写法的好处,就是我们只需要定义规则和规则参数,并且填入到数组里面就行,不像<code>switch</code>要关心一大坨case 分支.</p>
+<p>例如刚才提到的</p>
+<blockquote>
+<p>帖了10个贴就不能增加积分之类的</p>
+</blockquote>
+<p>我们只需要稍稍改良一下<code>task</code>的定义<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> totalPoint = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ruleQuery = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> taskQueue = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">//rule第一个参数可以用于定义发帖的计量.</span></span><br><span class="line"><span class="keyword">var</span> rule1 = [<span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ruleQuery[<span class="string">'rule1'</span>] = rule1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//积分规则</span></span><br><span class="line"><span class="keyword">var</span> task2  = <span class="function"><span class="keyword">function</span> (<span class="params">params, done</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(params &lt; <span class="number">10</span>)&#123;</span><br><span class="line">        totalPoint += <span class="number">5</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        totalPoint += <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    done(totalPoint);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">taskQueue[<span class="string">'发帖'</span>] = task2;</span><br><span class="line"></span><br><span class="line">taskQueue[<span class="string">'发帖'</span>].apply(<span class="literal">null</span>, ruleQuery[<span class="string">'rule1'</span>]);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/06/24/nodejs/hangjs2014one/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          2014 Hangjs 见闻流水账第一天
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/06/02/html5/angularexam/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Angularjs 学习总结</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="nodejs/userjsarray" data-title="JS 数组的奇妙用法" data-url="http://blog.gfdsa.net/2014/06/09/nodejs/userjsarray/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

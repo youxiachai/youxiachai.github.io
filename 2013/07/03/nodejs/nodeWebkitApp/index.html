@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>用node-webkit开发PC 客户端 | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##导言##node-webkit 是一个很神奇的桌面客户端项目,正如这个项目的名字,这个项目是由node 和 webkit 构成,简单来说,就是你可以用HTML 5和 node 进行桌面客户端开发,而且客户端还是同时支持在 WIN,MAC,LINUX运行. 下面,就用一个简单的例子来展示一下node-webkit的魅力.">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用node-webkit开发PC 客户端">
+<meta property="og:url" content="http://blog.gfdsa.net/2013/07/03/nodejs/nodeWebkitApp/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="##导言##node-webkit 是一个很神奇的桌面客户端项目,正如这个项目的名字,这个项目是由node 和 webkit 构成,简单来说,就是你可以用HTML 5和 node 进行桌面客户端开发,而且客户端还是同时支持在 WIN,MAC,LINUX运行. 下面,就用一个简单的例子来展示一下node-webkit的魅力.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.gfdsa.net/images/nodewebkit/nodewebkit1.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/nodewebkit/oscdesk1.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/nodewebkit/oscdesk2.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/nodewebkit/toolbar.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/nodewebkit/console.jpg">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用node-webkit开发PC 客户端">
+<meta name="twitter:description" content="##导言##node-webkit 是一个很神奇的桌面客户端项目,正如这个项目的名字,这个项目是由node 和 webkit 构成,简单来说,就是你可以用HTML 5和 node 进行桌面客户端开发,而且客户端还是同时支持在 WIN,MAC,LINUX运行. 下面,就用一个简单的例子来展示一下node-webkit的魅力.">
+<meta name="twitter:image" content="http://blog.gfdsa.net/images/nodewebkit/nodewebkit1.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-nodejs/nodeWebkitApp" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/07/03/nodejs/nodeWebkitApp/" class="article-date">
+  	<time datetime="2013-07-02T16:00:00.000Z" itemprop="datePublished">7月 3 2013</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用node-webkit开发PC 客户端
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##导言##<br>node-webkit 是一个很神奇的桌面客户端项目,正如这个项目的名字,这个项目是由node 和 webkit 构成,简单来说,就是你可以用HTML 5和 node 进行桌面客户端开发,而且客户端还是同时支持在 WIN,MAC,LINUX运行. 下面,就用一个简单的例子来展示一下node-webkit的魅力.<br><a id="more"></a></p>
+<p>##创建项目##</p>
+<p>###本例子基于Grunt构建###<br>如果,你用过grunt,要创建一个node-webkit 非常简单,我已经写好了一个node-webkit的<code>grunt-init</code>的项目模板. 至于怎么安装这个模板,跟官方的教程一样.<br>如果你是windows 用户</p>
+<blockquote>
+<p><code>md %USERPROFILE%\.grunt-init\node-webkit</code> <br><br><code>git clone git@github.com:youxiachai/grunt-init-node-webkit.git %USERPROFILE%\.grunt-init\node-webkit</code></p>
+</blockquote>
+<p>linux or mac</p>
+<blockquote>
+<p>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:youxiachai/grunt-init-node-webkit.git ~/.grunt-init/node-webkit</p>
+</blockquote>
+<p>你只需要用</p>
+<blockquote>
+<p><code>grunt-init node-webit</code></p>
+</blockquote>
+<p>就可以创建完毕.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">├─app.nw</span><br><span class="line">└─test</span><br></pre></td></tr></table></figure>
+<p>app.nw 这个目录就是我们准备要开始写的pc 客户端的项目文件夹,运行node-webkit项目很简单,只需要把node-webkit 的运行环境配置到环境变量,然后运行</p>
+<blockquote>
+<p><code>nw app.nw</code> 就可以运行起来了.<br><img src="/images/nodewebkit/nodewebkit1.jpg" alt="oscdesk1"></p>
+</blockquote>
+<p>PS: 如果你不想接触grunt,不过我建议还是学一下grunt,你可以到<a href="https://github.com/rogerwang/node-webkit#quick-start" target="_blank" rel="noopener">https://github.com/rogerwang/node-webkit#quick-start</a> 学习如何启动一个node-webkit应用.</p>
+<p>##效果图##<br><img src="/images/nodewebkit/oscdesk1.jpg" alt="oscdesk1"></p>
+<p><img src="/images/nodewebkit/oscdesk2.jpg" alt="oscdesk1"></p>
+<p>这个就是所谓的 win 8 风格的客户端了吧….界面用的框架是这货:<a href="http://aozora.github.io/bootmetro/" target="_blank" rel="noopener">http://aozora.github.io/bootmetro/</a> 90% 的时间都是调整界面…蛋疼死了……连个 win8 风格的progress 都没..让我非常伤心..也可能是alpha 的原因吧. 不过最后的效果,还是很难看,就凑合着过去吧….</p>
+<p>###开发###<br>基于node-webkit 开发pc 客户端语言支持 <code>c/c++</code>,<code>html5</code>,<code>css3</code>, <code>js</code>,<code>node api</code>.好了,现在我们开始用html 5 + css3 写一个pc 客户端吧.<br><code>node-webkit</code>本质就是一个可以跑node 的浏览器,所以,我们用web 开发的技巧来开发pc 客户端毫无问题.</p>
+<p>首先,打开<code>toolbar</code>,在<code>package.json</code>文件里面有个<code>toolbar</code>的参数,设置为<code>true</code>即可,就会见到如下图所示:</p>
+<blockquote>
+<p><img src="/images/nodewebkit/toolbar.jpg" alt="toolbar"></p>
+</blockquote>
+<p>点击那个三横线的按钮,一个chrome 风的调试窗口就出来了.</p>
+<blockquote>
+<p><img src="/images/nodewebkit/console.jpg" alt="console"></p>
+</blockquote>
+<p>开发的时候,我们修改完文件,并不需要重新运行程序来看结果,我们,可以直接点击左边的刷新按钮即可看到我们修改的运行结果.用<code>node-webkit</code>开发客户端是不是很方便了!</p>
+<p>那么接下来,要开发一个oschina pc 客户端,我们只需要知道,相关api 就行了,从android 客户端源码里面可以得到相关api…具体代码在<code>app/model/oschinaApi.js</code> 文件里面.</p>
+<p>node-webkit,已经吧相关的安全限制已经去掉,所以说,用node-webkit开发pc客户端,用webkit 发的请求不受同源限制. 用node-webkit 开发一些restful 应用是非常舒服的事情,只要有个不错的界面.关于<code>node-webkit</code>的东西也就这么些了,剩下的就是web 开发,不在本文<code>node-webkit</code>范围内,所以就不再啰嗦..</p>
+<p>##使用的开源项目##<br>界面: </p>
+<p><a href="http://aozora.github.io/bootmetro/" target="_blank" rel="noopener">http://aozora.github.io/bootmetro/</a> </p>
+<p><a href="https://github.com/cubiq/iscroll" target="_blank" rel="noopener">https://github.com/cubiq/iscroll</a></p>
+<p>模板引擎: </p>
+<p><a href="https://github.com/visionmedia/ejs" target="_blank" rel="noopener">https://github.com/visionmedia/ejs</a></p>
+<p>##项目地址##<br>Github: </p>
+<blockquote>
+<p><a href="https://github.com/youxiachai/osChinaDesktopClient" target="_blank" rel="noopener">https://github.com/youxiachai/osChinaDesktopClient</a></p>
+</blockquote>
+<p>git@osc:</p>
+<blockquote>
+<p><a href="http://git.oschina.net/youxiachai/oschinadesktopclient" target="_blank" rel="noopener">http://git.oschina.net/youxiachai/oschinadesktopclient</a></p>
+</blockquote>
+<p> 程序运行: windows用户之间去到<code>app.nw</code> 目录下运行 nw.exe 即可.</p>
+<blockquote>
+<p>cd app.nw <br> nw.exe</p>
+</blockquote>
+<p>linux 或者mac 用户 把除 index.html,package.json,app 以外的文件删除,然后将<code>node-webkit</code> 运行环境配到环境变量中运行</p>
+<blockquote>
+<p>nw app.nw</p>
+</blockquote>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/08/31/nodejs/gruntjsstart/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Grunt 新手指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/06/26/pomelo/pomelo-faq/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Pomelo Issue Faq(Pomelo 常见问题集)</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="nodejs/nodeWebkitApp" data-title="用node-webkit开发PC 客户端" data-url="http://blog.gfdsa.net/2013/07/03/nodejs/nodeWebkitApp/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

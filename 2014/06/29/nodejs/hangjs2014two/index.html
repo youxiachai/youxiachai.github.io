@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>2014 Hangjs 见闻流水账第二天 | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言第一天传送门: 2014 Hangjs 见闻流水账第一天  写作风格跟第一天还是一样的.">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2014 Hangjs 见闻流水账第二天">
+<meta property="og:url" content="http://blog.gfdsa.net/2014/06/29/nodejs/hangjs2014two/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="前言第一天传送门: 2014 Hangjs 见闻流水账第一天  写作风格跟第一天还是一样的.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2014 Hangjs 见闻流水账第二天">
+<meta name="twitter:description" content="前言第一天传送门: 2014 Hangjs 见闻流水账第一天  写作风格跟第一天还是一样的.">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-nodejs/hangjs2014two" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/06/29/nodejs/hangjs2014two/" class="article-date">
+  	<time datetime="2014-06-28T16:00:00.000Z" itemprop="datePublished">6月 29 2014</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2014 Hangjs 见闻流水账第二天
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>第一天传送门: <a href="http://cnodejs.org/topic/53aa6d6dc3ee0b58206c7b3f" target="_blank" rel="noopener">2014 Hangjs 见闻流水账第一天 </a></p>
+<p>写作风格跟第一天还是一样的.</p>
+<a id="more"></a>
+<h2 id="Slide"><a href="#Slide" class="headerlink" title="Slide"></a>Slide</h2><p>每个slide我都会根据自己的理解重新命名一次,用于表达自己的第一看法,主观意见,不喜可吐槽,但是不要喷,就算要喷请轻碰…</p>
+<h3 id="angular-大法好"><a href="#angular-大法好" class="headerlink" title="angular 大法好"></a>angular 大法好</h3><p>今天第一场slide是由<a href="http://weibo.com/isofish" target="_blank" rel="noopener">Sofish</a>带来的关于如何<a href="http://sofi.sh/2412" target="_blank" rel="noopener">优化你的Angular Web App</a>.</p>
+<p>作为一名angular用户,这次slide分享的切换路由状态的监听事件,是个不错的收获,之前的loading状态都是到处定义开始-结束和标识,或者自定义一个服务来进行全局控制.有内置的话就不需要每次碰到都自己写了.</p>
+<p>不过,对于angular的代码组织的说明,还是通用方案(例如使用<a href="https://github.com/angular/angular-seed/" target="_blank" rel="noopener">angular-seed</a>),这个通用方案的最大的弊病就在于,随着项目的业务越来越复杂,单文件的代码量会越来越大,后来Q&amp;A也有人提了我同样的问题,不过,Sofish 简单回答带过.</p>
+<p>对于没有去hangjs的同学,这个slide关于angular的优化很值得一看…</p>
+<p>PS: 这个PPT在现场看的时候,异常辛苦(字完全看不清),吴老师吐槽这个slide的文字背景对比度太没考虑现场的投影设备环境了…</p>
+<h4 id="视频传送门"><a href="#视频传送门" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/oMuGAFbPnf8/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/09.Sofish-%E4%BC%98%E5%8C%96%E4%BD%A0%E7%9A%84Angular%20Web%20App.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="如何成为一名优秀的githuber"><a href="#如何成为一名优秀的githuber" class="headerlink" title="如何成为一名优秀的githuber"></a>如何成为一名优秀的githuber</h3><p>这次slide由<a href="http://weibo.com/137601206" target="_blank" rel="noopener">郭宇</a>,分享的<a href="https://github.com/jsconfcn/hangjs/blob/gh-pages/slides/GuoYu-%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AE%A1%E7%90%86%E4%B8%8E%E7%BB%B4%E6%8A%A4-%E6%88%91%E7%9A%84%E5%BC%80%E6%BA%90%E4%B8%80%E5%B9%B4.md" target="_blank" rel="noopener">开源项目的管理与维护</a></p>
+<p>作为一名github的活跃用户,这场由github 超活跃的用户带来的演讲,有不少启发的地方.</p>
+<h4 id="开源项目的兴奋点"><a href="#开源项目的兴奋点" class="headerlink" title="开源项目的兴奋点"></a>开源项目的兴奋点</h4><p><a href="http://weibo.com/137601206" target="_blank" rel="noopener">郭宇</a> star 数最大的项目就是那个命令行的<a href="https://github.com/turingou/douban.fm" target="_blank" rel="noopener">豆瓣电台</a> 现在是978, 其实,我是万万没想到(这个douban.fm,我是从刚开始看到现在,我还贡献了几个PR),原来大家对于能够用命令行播放在线音乐的兴趣是这么大的,不知道是真解决了自己的需求,还只是为了炫酷?</p>
+<p>我认识的一部分github朋友,为什么开坑,不填坑.很多原因都是因为,没人关注啊.写了也没什么反响,没有了自我满足那块(不少开坑的作者,就是冲着自我满足),也就没有动力去填坑了.所以,如果是要打算开一个能够自我满足的坑,在开坑的时候,最后,看一下当前的IT热点,例如,ios 的swift.这样的开坑,获得各种眼球的机会大大挣大.可能有人会说,这样是不是不负责任的行为?</p>
+<p>我个人看法,作为一个凡人,获得一些小小的自我满足,其实也没什么,如果你能够针对问题提issue,而不是看地图炮就好,其实,不少开坑的作者,还是很喜欢有人针对他的坑,提一些意见.不过,开坑的话,有时候难免会碰到几个莫民奇妙的喷子,对于这些喷子,一开始倒是挺生气的,不过,后边会发现,随着关注度提高到一定程度,喷子必有,也没必要为了纠结这几个喷子,而影响了正常的心情.</p>
+<h4 id="开源项目的自我满足"><a href="#开源项目的自我满足" class="headerlink" title="开源项目的自我满足"></a>开源项目的自我满足</h4><p>如何开坑(建立开源项目),其实是个很大的问题,我认识的不少拥有github账号的朋友,很多就是一些僵尸,甚至几年来,github活动主页全部是0.个人觉得,这种现象的产生,是因为,他们很多时候都没法从写代码中获得到足够的满足,连自己的都没法满足,又如何能够满足他人呢?又如何能够把开坑当成一种有趣的事情来做呢?个人看法,切勿地图炮….</p>
+<p>在自我满足达到一定程度,就会自然而然的负起责任来.</p>
+<h4 id="视频传送门-1"><a href="#视频传送门-1" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/ZSV7-gydgsQ/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/10.%E9%83%AD%E5%AE%87-%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AE%A1%E7%90%86%E4%B8%8E%E7%BB%B4%E6%8A%A4.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="思考如何组织管理大型JS项目"><a href="#思考如何组织管理大型JS项目" class="headerlink" title="思考如何组织管理大型JS项目"></a>思考如何组织管理大型JS项目</h3><p>由EF 教育的<a href="https://github.com/mikaelkaron" target="_blank" rel="noopener">Mikael Karon</a>带来的<a href="http://2014.jsconf.cn/slides/mikaelkaron-massivejs/massive-js.html" target="_blank" rel="noopener">Massive Javascript Development</a></p>
+<p>老实说,完全没听懂.后来还是看<a href="http://weibo.com/sharpmaster" target="_blank" rel="noopener">民工精髓V</a> 的微博,才知道说的是一些很高深的内容</p>
+<blockquote>
+<p>…这老外讲的架构方面的主题，可能因为我平时比较关注这方面，所以毫无压力听懂说的每个东西，然后还在微博上实时翻译记录了。手机打字速度太慢了，下次来听还是得带电脑。老外讲的要点就是，对于大型项目，要模块化，开发阶段小粒度，部署阶段大粒度。真精辟，我也这么想。</p>
+</blockquote>
+<blockquote>
+<p><a href="http://weibo.com/1858846672/Ba9NkEPoO" target="_blank" rel="noopener">这个老外讲的切中大型工程的要点:模块化，开发阶段小粒度，部署阶段大粒度</a></p>
+</blockquote>
+<p>有兴趣的去看看</p>
+<h4 id="视频传送门-2"><a href="#视频传送门-2" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/fqKtbaP0DIA/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/11.Mikael%20Karon%20-%20Massive%20Javascript%20Development2.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="并不诱人的轮子-–-TroopJS"><a href="#并不诱人的轮子-–-TroopJS" class="headerlink" title="并不诱人的轮子 – TroopJS"></a>并不诱人的轮子 – TroopJS</h3><p>还是EF 教育的人,<a href="https://github.com/garryyao" target="_blank" rel="noopener">Garry Yao</a>,关于<a href="http://2014.jsconf.cn/slides/garryyao-troopjs/scalable-web-application-with-troopjs.html" target="_blank" rel="noopener">Scalable Web Application with TroopJS</a></p>
+<p>这个slide完全没听进去…</p>
+<h4 id="视频传送门-3"><a href="#视频传送门-3" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/JKNKWW_yZrw/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/12.Garry%20Yao%20-%20Scalable%20Web%20Application%20with%20TroopJS.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="考虑我们是有追求的程序员"><a href="#考虑我们是有追求的程序员" class="headerlink" title="考虑我们是有追求的程序员"></a>考虑我们是有追求的程序员</h3><p>下午第一场,是人见人黑的<a href="http://weibo.com/lifesinger" target="_blank" rel="noopener">玉伯</a>的<a href="http://2014.jsconf.cn/slides/how-to-continue-to-grow-up.pdf" target="_blank" rel="noopener">如何持续技术学习</a></p>
+<p>如果,你还没有自己的一套自我管理观的话,玉伯这个slide应该对你能够有所启发.</p>
+<p>我对这个slide归纳就是:控制输入,主动思考,最后自我输出.</p>
+<h4 id="视频传送门-4"><a href="#视频传送门-4" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/VUzRIPY6Es8/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/13.%E7%8E%89%E4%BC%AF%20%E5%A6%82%E4%BD%95%E6%8C%81%E7%BB%AD%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="让你的服务快快快"><a href="#让你的服务快快快" class="headerlink" title="让你的服务快快快"></a>让你的服务快快快</h3><p>台湾的<a href="https://github.com/clonn" target="_blank" rel="noopener">Caesar Chi</a>带来的<a href="http://2014.jsconf.cn/slides/nodejs_api_connect_jsconfcn_hangjs.pdf" target="_blank" rel="noopener">Node.js 與多方服務串接實務</a></p>
+<p>看这个slide题目,你第一反应可能又是准备水一场了吧.因为,连接多个服务商,无非就是各种认证接入,不过,实际上这个slide并没有把重点放在串接上.</p>
+<p>前面,一部分时间讲如何将对接服务进行模块化实践,后边就大谈,如何提高服务端对客户端响应.其中,的一个实践就是</p>
+<blockquote>
+<p>先响应,后处理</p>
+</blockquote>
+<p>客户端发起了一个请求,服务端立马反应给客户端,让客户端知道服务端在处理了,你去干点的吧,结果由服务端主动推送.这样做的好处就是可以让客户端不用等待.</p>
+<p>当然,缺点也有,就是增加了对异常的处理复杂性.举个例子,你提交了一个表单,然后,服务器告诉你,正在处理,于是你去做点别的东西,或者离开,很不幸的是,你表单某个字段有问题,这是,服务器推送了一个异常给你,但是,你已经离开原来页面了,于是,你不知道你的填写是有问题的.还有一个问题就是维持长连接的资源消耗.</p>
+<h4 id="视频传送门-5"><a href="#视频传送门-5" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/h8TuqilJq0w/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/14.Caesar%20Chi%20Node.js%20%E8%88%87%E5%A4%9A%E6%96%B9%E6%9C%8D%E5%8B%99%E4%B8%B2%E6%8E%A5%E5%AF%A6%E5%8B%99.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="Node-js是如何进化为NodeOs"><a href="#Node-js是如何进化为NodeOs" class="headerlink" title="Node.js是如何进化为NodeOs"></a>Node.js是如何进化为NodeOs</h3><p>由NodeOs 作者<a href="https://github.com/groundwater" target="_blank" rel="noopener">Jacob Groundwater</a>,分享的<a href="http://2014.jsconf.cn/slides/five-lines.pdf" target="_blank" rel="noopener">five-lines 深入浅出 node 命令行工具</a></p>
+<p>这个slide应该是开场几个小时前定下来的,之前日程表上面是没有的,NodeOs记得上一年,大家有过一段讨论,后来就沉了,当时,听到介绍的时候,立马去看了一下<a href="https://github.com/NodeOS/NodeOS" target="_blank" rel="noopener">NodeOs</a>的github,发现了个<a href="https://github.com/NodeOS/NodeOS-Docker" target="_blank" rel="noopener">docker image</a>,看来还是有点进度的.</p>
+<p>不过,这次slide挺有意思的,正如标题所说,深入浅出,通过对node基本的一些特性(执行shell命令),最后慢慢的做出复杂的东西.例如打造一个Node.js 风格的操作系统,让全部命令执行输出JSON化.</p>
+<p>其实,很多语言都有执行shell命令的api,但是,为什么之前没有人想到要搞个JavaOs,PythonOs…等等(可能也有但是我不知道).这个slide带给我最大的收获,就是要勇于去想象!</p>
+<p>就算是这个想象有点不切实际,但是如果是理论上可行的,为啥不尝试在想象的时候去实践一下?</p>
+<p>而在Node.js 上实际上还真出现了不少想象力丰富的东西,除了前面提到的NodeOs,还有<a href="https://github.com/YaroslavGaponov/node-jvm" target="_blank" rel="noopener">Node上的jvm虚拟机</a>,让Node.js做类似于arduino 的<a href="https://tessel.io/" target="_blank" rel="noopener">tessel</a>,有些朋友可能会觉得这些东西的可能是个傻x想法,但是,现实是这些东西不但被人想出来,而且还都做出来了,我觉得,当人不愿意去进行想象的时候,也就停止了进步.忽然,想起了老罗的那句语录.</p>
+<blockquote>
+<p>不被嘲笑的梦想，是不值得去实现的</p>
+</blockquote>
+<p>当一个程序员失去想象力的时候,可能也是步向平庸的开始了.</p>
+<h4 id="视频传送门-6"><a href="#视频传送门-6" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/3-3PegdbS6E/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/15.Jacob%20Groundwater%20and%20dead-horse%20-%20five-lines.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="c-和Node-js-相亲相爱"><a href="#c-和Node-js-相亲相爱" class="headerlink" title="c# 和Node.js 相亲相爱"></a>c# 和Node.js 相亲相爱</h3><p>这么多slide里头,唯一一个用windows(其他都用Mac)进行分享的,微软美女程序员<a href="http://irisclasson.com/" target="_blank" rel="noopener">Iris</a> 带来的<a href="https://github.com/tjanczuk/edge" target="_blank" rel="noopener">Edge.js</a></p>
+<p>实际上就是一个让c#程序里头能够跑Node.js,在Node.js里头能够跑c#,个人不怎么喜欢这玩意,后来也跟老雷讨论了一下这东西,老雷也表示不怎么喜欢.我们俩不怎么喜欢的原因,可能都是因为我们都没接触过c#.</p>
+<p>因为,不怎么感兴趣,所以没什么好说的.</p>
+<h4 id="视频传送门-7"><a href="#视频传送门-7" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/cdedTXM5y28/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/16.Iris%20-%20Edge.js.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="手机传感器在移动web的实践"><a href="#手机传感器在移动web的实践" class="headerlink" title="手机传感器在移动web的实践"></a>手机传感器在移动web的实践</h3><p>天猫前端<a href="http://weibo.com/777865156" target="_blank" rel="noopener">鬼道-徐凯</a>带来的<a href="http://2014.jsconf.cn/slides/luics-hybrid-api.html" target="_blank" rel="noopener">Hybrid API</a>这是一个你只看题目,怎么也不会猜到要准备说的什么内容的分享(当时看日程表的时候,Hybrid Api? 这是啥东西啊…).</p>
+<p>这个slide分享的是,手机传感器在移动web的使用实践.你可能会惊讶,现在的手机浏览器能够支持传感器了?目前来看,手机浏览器还没支持w3c关于传感器的实现,但是,不妨碍我们的想象力啊,于是,我们可以通过改造手机的web控件,从而让移动web支持手机传感器,然后,利用这个特性,来开发一些特别有趣的东西.</p>
+<p>后边,鬼道就分享天猫app是如何利用这个特性,进行真实项目实践.总得来说,这是一个很具有想象力的分享!</p>
+<h4 id="视频传送门-8"><a href="#视频传送门-8" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/1-Ltio6NGaU/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/17.%E9%AC%BC%E9%81%93%20Hybrid%20API.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="用Node-js玩转Storm"><a href="#用Node-js玩转Storm" class="headerlink" title="用Node.js玩转Storm"></a>用Node.js玩转Storm</h3><p>Luying Li(没找到相关的个人主页)带来的<a href="http://2014.jsconf.cn/slides/Introduction-To-Storm.pdf" target="_blank" rel="noopener">Storm - Distributed and fault-tolerant realtime computation</a>分享.</p>
+<p>其实看日程表的时候,看到Storm混进来,顿时在想,这玩意不是用Java写的吗,跟JS有什么关系?会不会跟<a href="http://2014.jsconf.cn/slides/nodejs_api_connect_jsconfcn_hangjs.pdf" target="_blank" rel="noopener">Node.js 與多方服務串接實務</a>带来一些意外的惊喜?不过这次,真没什么意外惊喜了.</p>
+<p>大部分时间都是介绍Storm是个什么,举的例子也全部都是Java写的.最后,补充了一下,Storm的实现支持任何语言,Node.js当然不在话下,于是最后贴了两个Node.js实现.那么举例子的时候..为啥不用JS写…感觉好没说服力..这个场子毕竟是JS….你确不用js来举例子.</p>
+<h3 id="来日方长的前端技术革命"><a href="#来日方长的前端技术革命" class="headerlink" title="来日方长的前端技术革命"></a>来日方长的前端技术革命</h3><p>最后一场slide由来自于云适配的<a href="http://weibo.com/chenbenfeng" target="_blank" rel="noopener">陈本峰</a>分享的<a href="http://2014.jsconf.cn/slides/WebComponents.JSConf.pdf" target="_blank" rel="noopener">Web Components标准：前端开发的新一次技术革命</a></p>
+<p>由于,这个话题,我不怎么感兴趣,然后这场slide的ppt还没放上来,所以,我都忘得差不多这场slide究竟说了些什么..只是印象中知道,这个是几年后才有可能实现的标准.</p>
+<h4 id="视频传送门-9"><a href="#视频传送门-9" class="headerlink" title="视频传送门"></a>视频传送门</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">在线播放</th>
+<th style="text-align:left">视频下载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.tudou.com/programs/view/pKlqYK8s6bY/" target="_blank" rel="noopener">土豆</a></td>
+<td style="text-align:left"><a href="http://hangjs.b0.upaiyun.com/videos/19.%E9%99%88%E6%9C%AC%E5%B3%B0%20-%20Web%20Components%E6%A0%87%E5%87%86%EF%BC%9A%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%96%B0%E4%B8%80%E6%AC%A1%E6%8A%80%E6%9C%AF%E9%9D%A9%E5%91%BD.mov" target="_blank" rel="noopener">又拍云</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次两天的Hangjs, 面基了不少一直在网上有交流但是,从来没见过面的朋友,特别是有机会一起同行的<a href="http://weibo.com/ucdok" target="_blank" rel="noopener">老雷</a>,在我看来,参加这类技术大会,还是以认识和交流,各种平时耳闻但不见面的人为主最好,听slide对自己有用的就认真听听,这次hangjs我最大的软肋就是不够主动,没有随便逮住一个人就说,你好,能够简单认识一下吗?这是我的github,来扩大一下自己的人脉起码也可以为自己的<a href="https://github.com/youxiachai" target="_blank" rel="noopener">github</a>涨涨粉…).</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>其他人的hangjs 参会记录</p>
+<p><a href="http://weibo.com/p/1001603724334156923311" target="_blank" rel="noopener">梁杰_numbbbbb 技术大会到底该怎么听？</a></p>
+<p><a href="http://weibo.com/p/1001603724961759021973" target="_blank" rel="noopener">民工精髓V 杭JS参会记录</a></p>
+<p><a href="http://zhuli.me/hang-js-2014/" target="_blank" rel="noopener">lisposter Hang-JS-2014</a></p>
+<p><a href="http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/" target="_blank" rel="noopener">鹄思乱想 2014 杭JS 杂谈</a></p>
+<p><a href="https://github.com/fsiaonma/fsiaonma.blog.com/issues/5" target="_blank" rel="noopener">fsiaonma 继《京JS》后，再遇《杭JS》</a></p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/31/android/andorideventemitter/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          android 事件机制的实现与实践
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/06/24/nodejs/hangjs2014one/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2014 Hangjs 见闻流水账第一天</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="nodejs/hangjs2014two" data-title="2014 Hangjs 见闻流水账第二天" data-url="http://blog.gfdsa.net/2014/06/29/nodejs/hangjs2014two/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

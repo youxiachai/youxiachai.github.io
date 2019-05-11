@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Let&#39;s start Cocos2d-html5 1 : Hello World! | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="世界观组成 cocos2d-html5的世界基石大体分为3类  Scene Layer Sprite  关于这部分的详细讨论我们留到后边吧,如果你等不及了,可以去翻阅官方文档 here">
+<meta name="keywords" content="game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Let&#39;s start Cocos2d-html5 1 : Hello World!">
+<meta property="og:url" content="http://blog.gfdsa.net/2014/02/08/game/startcocos2d/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="世界观组成 cocos2d-html5的世界基石大体分为3类  Scene Layer Sprite  关于这部分的详细讨论我们留到后边吧,如果你等不及了,可以去翻阅官方文档 here">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.gfdsa.net/2014/02/08/game/startcocos2d/myworld.png">
+<meta property="og:image" content="http://blog.gfdsa.net/2014/02/08/game/startcocos2d/execute-path.png">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Let&#39;s start Cocos2d-html5 1 : Hello World!">
+<meta name="twitter:description" content="世界观组成 cocos2d-html5的世界基石大体分为3类  Scene Layer Sprite  关于这部分的详细讨论我们留到后边吧,如果你等不及了,可以去翻阅官方文档 here">
+<meta name="twitter:image" content="http://blog.gfdsa.net/2014/02/08/game/startcocos2d/myworld.png">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-game/startcocos2d" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/02/08/game/startcocos2d/" class="article-date">
+  	<time datetime="2014-02-07T16:00:00.000Z" itemprop="datePublished">2月 8 2014</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Let&#39;s start Cocos2d-html5 1 : Hello World!
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="世界观"><a href="#世界观" class="headerlink" title="世界观"></a>世界观</h2><p>组成 cocos2d-html5的世界基石大体分为3类</p>
+<ul>
+<li>Scene</li>
+<li>Layer</li>
+<li>Sprite</li>
+</ul>
+<p>关于这部分的详细讨论我们留到后边吧,如果你等不及了,可以去翻阅官方文档 <a href="http://cocos2d-x.org/wiki/Director_Scene_Layer_and_Sprite" target="_blank" rel="noopener">here</a><br><a id="more"></a></p>
+<h2 id="开天辟地"><a href="#开天辟地" class="headerlink" title="开天辟地"></a>开天辟地</h2><p>这个项目下载地址: <a href="https://github.com/youxiachai/Cocos2d-html5-little-book/tree/master/myhelloWorld" target="_blank" rel="noopener">https://github.com/youxiachai/Cocos2d-html5-little-book/tree/master/myhelloWorld</a></p>
+<ul>
+<li>项目目录结构</li>
+</ul>
+<p>总共才4个文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">│   boot-html5.js</span><br><span class="line">│   index.html</span><br><span class="line">│   main.js</span><br><span class="line">│</span><br><span class="line">└───src</span><br><span class="line">        HelloScence.js</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>index.html</code> 我的世界<br>要创建一个cocos2d-html5 的世界,我们只需要创建一个<code>canvas</code>和 一个<code>script</code> 即可.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"gameCanvas"</span> <span class="attr">width</span>=<span class="string">"1280"</span> <span class="attr">height</span>=<span class="string">"720"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"boot-html5.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>boot-html5.js</code></p>
+</li>
+</ul>
+<p>上帝说要有光,我们就得把光造出来,而这个文件就是用于如何让引入 cocos2d-html5 最基本的世界元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> d = <span class="built_in">document</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// cocos2d-html5 配置定义</span></span><br><span class="line">    <span class="keyword">var</span> c = &#123;</span><br><span class="line">        COCOS2D_DEBUG:<span class="number">2</span>, <span class="comment">//0 to turn debug off, 1 for basic debug, and 2 for full debug</span></span><br><span class="line">        showFPS:<span class="literal">true</span>,</span><br><span class="line">        frameRate:<span class="number">60</span>,</span><br><span class="line">        renderMode:<span class="number">0</span>,       <span class="comment">//渲染模式: 0(default), 1(Canvas only), 2(WebGL only)</span></span><br><span class="line">        tag:<span class="string">'gameCanvas'</span>, <span class="comment">//世界在那里!</span></span><br><span class="line">        engineDir:<span class="string">'../cocos2d/'</span>,</span><br><span class="line">       <span class="comment">// SingleEngineFile:'../../Cocos2d-html5-min.js',</span></span><br><span class="line">       <span class="comment">//引入我们定义的场景js 文件</span></span><br><span class="line">        appFiles:[</span><br><span class="line">            <span class="string">'src/HelloScence.js'</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">//添加引擎js 文件</span></span><br><span class="line">        <span class="keyword">var</span> s = d.createElement(<span class="string">'script'</span>);</span><br><span class="line">        s.src = c.engineDir + <span class="string">'jsloader.js'</span>;</span><br><span class="line">        d.body.appendChild(s);</span><br><span class="line">        <span class="comment">//把配置信息加载到document, 用于全局访问</span></span><br><span class="line">        <span class="built_in">document</span>.ccConfig = c;</span><br><span class="line">        s.id = <span class="string">'cocos2d-html5'</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>HelloScence.js</code></li>
+</ul>
+<p>现在,我们开始创建我的世界吧!</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HelloLayer = cc.Layer.extend(&#123;</span><br><span class="line">    init :<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>._super();</span><br><span class="line">        <span class="comment">// 获取当前屏幕信息</span></span><br><span class="line">        <span class="keyword">var</span> s = cc.Director.getInstance().getWinSize();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 游戏背景层</span></span><br><span class="line">        <span class="keyword">var</span> layer1 = cc.LayerColor.create(<span class="keyword">new</span> cc.Color4B(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">1280</span>, <span class="number">720</span>);</span><br><span class="line">        layer1.setAnchorPoint(<span class="keyword">new</span> cc.Point(<span class="number">0.5</span>,<span class="number">0.5</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 文字精灵</span></span><br><span class="line">        <span class="keyword">var</span> helloLabel = cc.LabelTTF.create(<span class="string">"Hello world"</span>, <span class="string">"Arial"</span>, <span class="number">60</span>);</span><br><span class="line">        helloLabel.setPosition(<span class="keyword">new</span> cc.Point(s.width/<span class="number">2</span>,s.height/<span class="number">2</span>));</span><br><span class="line">        helloLabel.setColor(<span class="keyword">new</span> cc.Color3B(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//把精灵添加到背景层</span></span><br><span class="line">        layer1.addChild(helloLabel);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 把合成好的层添加进来</span></span><br><span class="line">        <span class="keyword">this</span>.addChild(layer1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回我们的HelloLayer</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> HelloScene = cc.Scene.extend(&#123;</span><br><span class="line">    onEnter:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>._super();</span><br><span class="line">        <span class="comment">// 把我们的定义好的图层添加到场景里面</span></span><br><span class="line">        <span class="keyword">this</span>.addChild(<span class="keyword">new</span> HelloLayer().init());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>main.js</code><blockquote>
+<p>关于为什么是<code>main.js</code> 而不是其他,请看附录的加载流程图</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cocos2dApp = cc.Application.extend(&#123;</span><br><span class="line">    <span class="comment">// 加载配置信息, 这下明白`  document.ccConfig = c;` 的意思了吧</span></span><br><span class="line">    config:<span class="built_in">document</span>[<span class="string">'ccConfig'</span>],</span><br><span class="line">    ctor:<span class="function"><span class="keyword">function</span> (<span class="params">scene</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>._super();</span><br><span class="line">        <span class="keyword">this</span>.startScene = scene;</span><br><span class="line">        cc.COCOS2D_DEBUG = <span class="keyword">this</span>.config[<span class="string">'COCOS2D_DEBUG'</span>];</span><br><span class="line">        cc.initDebugSetting();</span><br><span class="line">        cc.setup(<span class="keyword">this</span>.config[<span class="string">'tag'</span>]);</span><br><span class="line">        cc.AppController.shareAppController().didFinishLaunchingWithOptions();</span><br><span class="line">    &#125;,</span><br><span class="line">    applicationDidFinishLaunching:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意 director 的使用</span></span><br><span class="line">        <span class="keyword">var</span> director = cc.Director.getInstance();</span><br><span class="line">        director.setDisplayStats(<span class="keyword">this</span>.config[<span class="string">'showFPS'</span>]);</span><br><span class="line">        director.setAnimationInterval(<span class="number">1.0</span> / <span class="keyword">this</span>.config[<span class="string">'frameRate'</span>]);</span><br><span class="line">        director.runWithScene(<span class="keyword">new</span> <span class="keyword">this</span>.startScene());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 我们的世界就出来了!</span></span><br><span class="line"><span class="keyword">var</span> myApp = <span class="keyword">new</span> cocos2dApp(HelloScene);</span><br></pre></td></tr></table></figure>
+<p><img src="./myworld.png" alt></p>
+<blockquote>
+<p>ps: firefox 的WEBGL 性能令人发指的烂…chrome 一般能跑满60帧</p>
+</blockquote>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="API-文档"><a href="#API-文档" class="headerlink" title="API 文档"></a>API 文档</h3><p>官方在线文档: <a href="http://www.cocos2d-x.org/reference/html5-js/V2.2.2/index.html" target="_blank" rel="noopener">http://www.cocos2d-x.org/reference/html5-js/V2.2.2/index.html</a></p>
+<p>官方文档离线镜像: <a href="https://github.com/youxiachai/cocos2d-html5-api-offlinedoc" target="_blank" rel="noopener">https://github.com/youxiachai/cocos2d-html5-api-offlinedoc</a></p>
+<h3 id="文件加载过程"><a href="#文件加载过程" class="headerlink" title="文件加载过程"></a>文件加载过程</h3><p>这个图是跑酷教程chapter2 截图</p>
+<p><img src="./execute-path.png" alt></p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/02/09/game/startcocos2d2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Let&#39;s start Cocos2d-html5 2 : Dynamic World !
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/01/20/nodejs/usercommander/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用node开发repl应用</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="game/startcocos2d" data-title="Let&#39;s start Cocos2d-html5 1 : Hello World!" data-url="http://blog.gfdsa.net/2014/02/08/game/startcocos2d/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

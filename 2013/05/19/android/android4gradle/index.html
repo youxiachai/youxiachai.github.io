@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>用Gradle 构建你的android程序 | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##前言##android gradle 的插件终于把混淆代码的task集成进去了，加上最近，android studio 用的是gradle 来构建项目， 下定决心把android gralde 构建项目的用户指南全部看完， 让不会用gradle 的人也用gradle构建android项目，让打包（注意，打包和构建是两码事）多版本android不再痛苦。最后，题外话：珍惜生命，远离ant….">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Gradle 构建你的android程序">
+<meta property="og:url" content="http://blog.gfdsa.net/2013/05/19/android/android4gradle/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="##前言##android gradle 的插件终于把混淆代码的task集成进去了，加上最近，android studio 用的是gradle 来构建项目， 下定决心把android gralde 构建项目的用户指南全部看完， 让不会用gradle 的人也用gradle构建android项目，让打包（注意，打包和构建是两码事）多版本android不再痛苦。最后，题外话：珍惜生命，远离ant….">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.273Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Gradle 构建你的android程序">
+<meta name="twitter:description" content="##前言##android gradle 的插件终于把混淆代码的task集成进去了，加上最近，android studio 用的是gradle 来构建项目， 下定决心把android gralde 构建项目的用户指南全部看完， 让不会用gradle 的人也用gradle构建android项目，让打包（注意，打包和构建是两码事）多版本android不再痛苦。最后，题外话：珍惜生命，远离ant….">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-android/android4gradle" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/05/19/android/android4gradle/" class="article-date">
+  	<time datetime="2013-05-18T16:00:00.000Z" itemprop="datePublished">5月 19 2013</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用Gradle 构建你的android程序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##前言##<br>android gradle 的插件终于把混淆代码的task集成进去了，加上最近，android studio 用的是gradle 来构建项目， 下定决心把android gralde 构建项目的用户指南全部看完， 让不会用gradle 的人也用gradle构建android项目，让打包（注意，打包和构建是两码事）多版本android不再痛苦。最后，题外话：珍惜生命，远离ant….<br><a id="more"></a></p>
+<p>##Gradle build android 历史##<br><a href="http://tools.android.com" target="_blank" rel="noopener">Android Tools 主页</a> ，大概是今年2月份发布 adt21.1 的时候，忽然在主页发现了<a href="http://tools.android.com/tech-docs/new-build-system" target="_blank" rel="noopener">New Build System</a> 原来是可以用gradle 来构建android项目，至于<a href="http://en.wikipedia.org/wiki/Gradle" target="_blank" rel="noopener">gradle</a>是什么（既然点击进来看了应该都知道了吧。） 。然后，又看了一下<a href="http://tools.android.com/tech-docs/new-build-system/roadmap" target="_blank" rel="noopener">RoadMap</a> 那时候，还并不支持Proguard 打包，于是就没看了。。。</p>
+<p>最近，android studio 发布，终于gradle 0.4 也跟着出来了，于是，先把gradle 学了一遍，然后把<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="noopener">Gradle Plugin User Guide</a>也认真阅读了一下，根据我的个人体验，如果你对gradle 毫无了解就去看<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="noopener">Gradle Plugin User Guide</a> 可能很多地方都一头雾水，但是并不妨碍你用gradle 打包android 应用，只是，出现问题，你就可能很头疼。不过，本篇博文就是让不会gradle 也能用上 gradle 打包android 程序，因为，我也不懂gradle，所以，我把我碰到的问题的解决方案都一一列出。</p>
+<p>顺便贴上官方为什么使用gradle 的理由</p>
+<ul>
+<li>Domain Specific Language (DSL) to describe and manipulate the build logic</li>
+<li>Build files are Groovy based and allow mixing of declarative elements through the DSL and using code to manipulate the DSL elements to provide custom logic.</li>
+<li>Built-in dependency management through Maven and/or Ivy.</li>
+<li>Very flexible. Allows using best practices but doesn’t force its own way of doing things.</li>
+<li>Plugins can expose their own DSL and their own API for build files to use.</li>
+<li>Good Tooling API allowing IDE integration</li>
+</ul>
+<p>##Gradle 基本概念##<br>首先我们学习几个gradle 的脚本语法，掌握了这几个语法，你就能非常简单的用gradle构建打包android项目了。<br>首先，我们来看下一个最简单android <code>build.gradle</code></p>
+<figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">buildscript &#123;</span><br><span class="line">       </span><br><span class="line">	 repositories &#123;</span><br><span class="line">            mavenCentral()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        dependencies &#123;</span><br><span class="line">            classpath <span class="string">'com.android.tools.build:gradle:0.4'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    apply <span class="string">plugin:</span> <span class="string">'android'</span></span><br><span class="line"></span><br><span class="line">    android &#123;</span><br><span class="line">        compileSdkVersion <span class="number">17</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>英语的介绍都来自与 gradle官方文档， 主要后边的中文不是翻译，是补充介绍。。</strong></p>
+<p><code>buildscript{}</code></p>
+<blockquote>
+<p>Configures the build script classpath for this project.<br>说白了就是设置脚本的运行环境</p>
+</blockquote>
+<p><code>repositories{}</code></p>
+<blockquote>
+<p>Returns a handler to create repositories which are used for retrieving dependencies and uploading artifacts produced by the project. 大意就是支持java 依赖库管理（maven/ivy）,用于项目的依赖。这也是gradle 强力的地方。。。 </p>
+</blockquote>
+<p><code>dependencies{}</code></p>
+<blockquote>
+<p>The dependency handler of this project. The returned dependency handler instance can be used for adding new dependencies. For accessing already declared dependencies, the configurations can be used.  依赖包的定义。支持maven/ivy，远程，本地库，也支持单文件，如果前面定义了<code>repositories{}</code>maven 库，使用maven的依赖（我没接触过ivy。。）的时候只需要按照用类似于<code>com.android.tools.build:gradle:0.4</code>，gradle 就会自动的往远程库下载相应的依赖。</p>
+</blockquote>
+<p><code>apply plugin:</code></p>
+<blockquote>
+<p>声明构建的项目类型，这里当然是android了。。。</p>
+</blockquote>
+<p><code>android{}</code></p>
+<blockquote>
+<p>设置编译android项目的参数，接下来，我们的构建android项目的所有配置都在这里完成。</p>
+</blockquote>
+<p>##构建一个Gradle android项目##<br>首先，你要安装<a href="http://www.gradle.org/downloads" target="_blank" rel="noopener">Gradle 1.6</a> 并且，写进系统的环境变量里面，所有的命令都是默认你已经配好了gradle 的环境。而且，已经已经升级了android sdk 22</p>
+<p>要用gradle构建你的有两种方式：（<strong>build.gradle 放到项目目录下</strong>）</p>
+<ol>
+<li>利用adt 22导出 build.gradle.</li>
+<li>复制别人写好的build.gradle 文件.</li>
+<li>根据gradle 规则，手写android 的build.gradle 文件。</li>
+</ol>
+<p>个人推荐1,2 方法。。。。</p>
+<p>一个android build.gradle 最基本基本文件<br><figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line"></span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenCentral()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath <span class="string">'com.android.tools.build:gradle:0.4'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'android'</span></span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">    compileSdkVersion <span class="number">17</span></span><br><span class="line">    buildToolsVersion <span class="string">"17"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">8</span></span><br><span class="line">        targetSdkVersion <span class="number">17</span></span><br><span class="line">    &#125;</span><br><span class="line">    sourceSets &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            manifest.srcFile <span class="string">'AndroidManifest.xml'</span></span><br><span class="line">            java.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">            resources.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">            aidl.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">            renderscript.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">            res.srcDirs = [<span class="string">'res'</span>]</span><br><span class="line">            assets.srcDirs = [<span class="string">'assets'</span>]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        instrumentTest.setRoot(<span class="string">'tests'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>接着在命令行cd 到项目目录下</p>
+<blockquote>
+<p>例如: cd e:\workplace\andoridGradle</p>
+</blockquote>
+<p>如果你是第一次使用gradle 构建android项目建议你先使用<code>gradle clean</code> 把android gradle 插件，还有相关依赖包下载下来并且对环境进行初始化，如果出错了，一般可能是下载超时，试多几次即可，最后你会看到如下提示：<code>BUILD SUCCESSFUL</code></p>
+<p>The TaskContainer.add() method has been deprecated and is scheduled to be remove<br>d in Gradle 2.0. Please use the create() method instead.</p>
+<p>:clean UP-TO-DATE</p>
+<p>BUILD SUCCESSFUL</p>
+<p>Total time: 7.847 secs</p>
+<p>完成以上的步骤，就可以正式使用gralde 构建你的android项目了。</p>
+<p>然后使用<code>gradle build</code> 就完成了android 项目的构建了。如果，你是照着以上步骤走的话，你将会想项目目录里面看到一个build 的目录，里面就是用gradle 构建android项目的全部例如了，结构目录看附录。</p>
+<p>最终打包的apk 就在build/apk 目录下了。然后，你会发现，两个apk 一个是</p>
+<ul>
+<li>[项目名]-debug-unaligned</li>
+<li>[项目名]-release-unsigned</li>
+</ul>
+<p>如果以上内容你都掌握的话，接下来就将详细说说如何利用gralde 打包android apk。</p>
+<p>##Gralde 打包参数详解##<br>上面说了一大堆东西，其实并不吸引人去使用gradle，如果只是构建项目的话，adt不是更合适吗？如果，你看完以下内容还是这么觉得的话，你就没必要折腾gradle了。。。。。。</p>
+<p>###打签名包###</p>
+<p>看附录 默认输出 <em>release</em> apk 是没有签名的，那么我们需要签名的很简单，只需要在android{}里面补充加上加上即可。完整<a href="https://gist.github.com/youxiachai/5608223" target="_blank" rel="noopener">build.gradle 请点击我的gist</a><br><figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs &#123;</span><br><span class="line">   myConfig&#123;</span><br><span class="line">     storeFile file(<span class="string">"gradle.keystore"</span>)</span><br><span class="line">    	storePassword <span class="string">"gradle"</span></span><br><span class="line">    	keyAlias <span class="string">"gradle"</span></span><br><span class="line">    	keyPassword <span class="string">"gradle"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">   buildTypes&#123;</span><br><span class="line">     release &#123;</span><br><span class="line">    	signingConfig  signingConfigs.myConfig</span><br><span class="line">     &#125; </span><br><span class="line">   &#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure><br>然后，运行<code>gradle clean</code> <code>gradle build</code> ,这次在build/apk  你看到了多了一个[项目名]-release-unaligned， 从字面上面我就可以知道，这个只是没有进行zipAlign 优化的版本而已。而[项目名]-release 就是我们签名，并且zipAlign 的apk包了.</p>
+<p>###打混淆包###</p>
+<p>只需要在原来的基础上加上，完整的<a href="https://gist.github.com/youxiachai/5608223" target="_blank" rel="noopener">proguad.gradle 代码</a><br><figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildTypes&#123;</span><br><span class="line">   release &#123;</span><br><span class="line">   signingConfig  signingConfigs.myConfig</span><br><span class="line">     runProguard <span class="literal">true</span></span><br><span class="line">     proguardFile <span class="string">'proguard-android.txt'</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p><code>gradle clean</code></p>
+<p><code>gradle build</code></p>
+<p>###打多渠道包(Product Flavor)###</p>
+<p>现在来解释一下上一节的问题，<strong>apk目录下的两个apk 的含义</strong></p>
+<p><strong>为什么产生了两个apk？</strong></p>
+<p>默认的android gralde 插件定义了两种apk 的类型<strong>debug</strong>, <strong>release</strong>，这两种类型的详细对比看附录。</p>
+<p>这个是android gralde 插件 <code>buildTypes{}</code> 方法产生的，默认配置好了两个默认模板，当然你也可以修改，前面我们就是在修改默认的release 的配置，让输出release类型的的apk，具有签名和混淆。</p>
+<p>对于多渠道包，android 插件提供了一个名为<code>Product Flavor{}</code> 的配置，用于进行多渠道打包。</p>
+<p>例如，我的android应用有海外版，和国内版本，而且这两个版本的包名是不一样的！！（我就举两个市场的例子安装这个思路，你要打包100个不同的市场只是几行代码的事情。）。</p>
+<p>你只需要在<code>android{}</code> 补充上<br><figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">productFlavors &#123;</span><br><span class="line">	playstore &#123;</span><br><span class="line">			packageName=<span class="string">'com.youxiachai.androidgradle.playstore'</span></span><br><span class="line">	&#125;</span><br><span class="line">	hiapk &#123;</span><br><span class="line">			packageName=<span class="string">'com.youxiachai.androidgradle.amazonappstore'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>   </p>
+<p>然后<code>gradle clean</code>,<code>gradle build</code>,在build/apk 下面你会看到一堆的包，命名格式[项目名]-[渠道名]-release</p>
+<p><strong>仅此而已?</strong></p>
+<p><code>Product Flavor{}</code> 不只是能改包名那么简单，还能够对编译的源码目录进行切换。</p>
+<p>什么意思? 不知道各位有没有用过友盟做用户统计，如果，你用的是分发渠道分析，你需要修改AndroidManifest.xml 添加上<br><code>&lt;meta-data android:value=&quot;hiapk&quot; android:name=&quot;UMENG_CHANNEL&quot;/&gt;</code></p>
+<p>如果，你很多渠道，，然后你就会很痛苦，现在用gradle 就非常舒服，你只需要在<code>android.sourceSets</code>指定我们的渠道名就行，android  gradle 插件，会自动打包！！！例如<br><figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        manifest.srcFile <span class="string">'AndroidManifest.xml'</span></span><br><span class="line">        java.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">        resources.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">        aidl.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">        renderscript.srcDirs = [<span class="string">'src'</span>]</span><br><span class="line">        res.srcDirs = [<span class="string">'res'</span>]</span><br><span class="line">        assets.srcDirs = [<span class="string">'assets'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    hiapk &#123;</span><br><span class="line">      	manifest.srcFile <span class="string">'hiapk/AndroidManifest.xml'</span></span><br><span class="line">    &#125;    	</span><br><span class="line">       	playstore &#123;</span><br><span class="line">       		manifest.srcFile <span class="string">'hiapk/AndroidManifest.xml'</span></span><br><span class="line">    &#125;</span><br><span class="line">       </span><br><span class="line">	instrumentTest.setRoot(<span class="string">'tests'</span>)</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>然后运行<code>gradle clean</code>,<code>gradle build</code>,省下的时间去喝杯咖啡，睡个觉什么的都好。。。</p>
+<p>###外部依赖###<br>android gradle 对于外部jar 包的应用支持maven/ivy 管理的包，也支持指定具体文件，前面已经在上文说过。上面演示的完整 build.gradle gist 里面也有写。你需要加上如下代码即可：<br><figure class="highlight groovy"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">	compile files(<span class="string">'libs/android-support-v4.jar'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> </p>
+<p>##结语##</p>
+<p>至此，对于用android gradle 构建android应用程序，打包android 程序，所需要的所有知识，在以上已经说明，只要你是认真看上面文章的，对于，如何打依赖于android library project 的包，可以看附录提供的那个德国人写的例子，而对于<code>build.gradle</code> 里面的代码你需要把<code>0.2</code>, 改为<code>0.4</code>即可。至于用gradle 运行android test case部分的教程，个人感觉写了也白写（我写过关于andorid 测试相关的文章，也录制过视频，所以有这个感觉。），估计不会有人关注，所以，如果你对用gradle 进行android test的话，可以看附录里面提供的官方gradle手册。</p>
+<p>##扩展阅读##</p>
+<p> 对于这部分内容，你读与不读，并不影响你使用gradle 打包android 项目。至于读了的好处就是你能够更好的使用gradle。。</p>
+<ul>
+<li><p>完整的<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="noopener">Gradle Plugin User Guide</a> 其中里面有个错误是<code>compile files(&#39;libs/android-support-v4.jar&#39;)</code> 不是<code>compile file(&#39;libs/android-support-v4.jar&#39;)</code> 教程是基于android gradle0.3 ，在0.4中只是多了<strong>混淆打包，这块已经在文中补充了。</strong></p>
+</li>
+<li><p>一个德国人写的<a href="https://github.com/Goddchen/Android-Gradle-Examples" target="_blank" rel="noopener">Android-Gradle-Examples</a></p>
+</li>
+<li><p><a href="http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html" target="_blank" rel="noopener"><code>dependencies{}</code></a> 更多的介绍。</p>
+</li>
+<li><p><strong>debug</strong>, <strong>release</strong>,这两种类型的默认配置如下：</p>
+<table cellspacing="0" bordercolor="#888" border="1" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px"><tbody><tr><td style="width:198px;height:19px">&nbsp;Property name</td><td style="width:195px;height:19px">&nbsp;Default values for debug</td><td style="width:241px;height:19px">&nbsp;Default values for release / other</td></tr><tr><td style="width:198px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>debuggable</b></font></td><td style="width:195px;height:20px">&nbsp;true</td><td style="width:241px;height:20px">&nbsp;false</td></tr><tr><td style="width:198px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>jniDebugBuild</b></font></td><td style="width:195px;height:20px">&nbsp;false</td><td style="width:241px;height:20px">&nbsp;false</td></tr><tr><td style="width:198px;height:19px">&nbsp;<b><font face="courier new, monospace" color="#38761d">renderscriptDebugBuild</font></b></td><td style="width:195px;height:19px">&nbsp;false</td><td style="width:241px;height:19px">&nbsp;false</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">renderscriptOptimLevel</font></b></td><td style="width:195px;height:20px">&nbsp;3</td><td style="width:241px;height:20px">&nbsp;3</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">packageNameSuffix</font></b></td><td style="width:195px;height:20px">&nbsp;null</td><td style="width:241px;height:20px">&nbsp;null</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">versionNameSuffix</font></b></td><td style="width:195px;height:20px">&nbsp;null</td><td style="width:241px;height:20px">&nbsp;null</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">signingConfig</font></b></td><td style="width:195px;height:20px">&nbsp;android.signingConfigs.debug</td><td style="width:241px;height:20px">&nbsp;null</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">zipAlign</font></b></td><td style="width:195px;height:20px">&nbsp;false</td><td style="width:241px;height:20px">&nbsp;true</td></tr></tbody></table>
+
+
+</li>
+</ul>
+<ul>
+<li><p><strong>defaultConfig {}</strong> 配置参数列表</p>
+<table cellspacing="0" bordercolor="#888" border="1" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px"><tbody><tr><td style="width:208px;height:19px">&nbsp;Property Name</td><td style="width:168px;height:19px">&nbsp;Default value in DSL object</td><td style="width:251px;height:19px">&nbsp;Default value</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>versionCode</b></font></td><td style="width:168px;height:20px">&nbsp;-1</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>versionName</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>minSdkVersion</b></font></td><td style="width:168px;height:20px">&nbsp;-1</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>targetSdkVersion</b></font></td><td style="width:168px;height:20px">&nbsp;-1</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>packageName</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>testPackageName</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;app package name + “.test”</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>testInstrumentationRunner</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;android.test.InstrumentationTestRunner</td></tr><tr><td style="width:208px;height:19px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>signingConfig</b></font></td><td style="width:168px;height:19px">&nbsp;null</td><td style="width:251px;height:19px">&nbsp;null</td></tr><br><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>runProguard</b></font></td><td style="width:168px;height:20px">&nbsp;false</td><td style="width:251px;height:20px">&nbsp;false</td></tr><br><tr><td style="width:208px;height:19px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>proguardFile</b></font></td><td style="width:168px;height:19px">&nbsp; ‘proguard-android.txt’ or ‘proguard-android-optimize.txt’</td><td style="width:251px;height:19px">&nbsp; ‘proguard-android.txt’ or ‘proguard-android-optimize.txt’</td></tr><br></tbody></table>
+</li>
+<li><p>build 结构目录</p>
+<figure class="highlight shell"><figcaption><span>tree</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">build/</span><br><span class="line">├── apk</span><br><span class="line">├── assets</span><br><span class="line">│   ├── debug</span><br><span class="line">│   └── release</span><br><span class="line">├── classes</span><br><span class="line">│   ├── debug</span><br><span class="line">│   │   └── com</span><br><span class="line">│   │       └── example</span><br><span class="line">│   │           └── gradle</span><br><span class="line">│   └── release</span><br><span class="line">│       └── com</span><br><span class="line">│           └── example</span><br><span class="line">│               └── gradle</span><br><span class="line">├── dependency-cache</span><br><span class="line">│   ├── debug</span><br><span class="line">│   └── release</span><br><span class="line">├── incremental</span><br><span class="line">│   ├── aidl</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   └── release</span><br><span class="line">│   ├── dex</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   └── release</span><br><span class="line">│   ├── mergeAssets</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   └── release</span><br><span class="line">│   └── mergeResources</span><br><span class="line">│       ├── debug</span><br><span class="line">│       └── release</span><br><span class="line">├── libs</span><br><span class="line">├── manifests</span><br><span class="line">│   ├── debug</span><br><span class="line">│   └── release</span><br><span class="line">├── res</span><br><span class="line">│   ├── all</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   │   ├── drawable-hdpi</span><br><span class="line">│   │   │   ├── drawable-mdpi</span><br><span class="line">│   │   │   ├── drawable-xhdpi</span><br><span class="line">│   │   │   ├── drawable-xxhdpi</span><br><span class="line">│   │   │   ├── layout</span><br><span class="line">│   │   │   ├── menu</span><br><span class="line">│   │   │   ├── values</span><br><span class="line">│   │   │   ├── values-sw720dp-land</span><br><span class="line">│   │   │   ├── values-v11</span><br><span class="line">│   │   │   └── values-v14</span><br><span class="line">│   │   └── release</span><br><span class="line">│   │       ├── drawable-hdpi</span><br><span class="line">│   │       ├── drawable-mdpi</span><br><span class="line">│   │       ├── drawable-xhdpi</span><br><span class="line">│   │       ├── drawable-xxhdpi</span><br><span class="line">│   │       ├── layout</span><br><span class="line">│   │       ├── menu</span><br><span class="line">│   │       ├── values</span><br><span class="line">│   │       ├── values-sw720dp-land</span><br><span class="line">│   │       ├── values-v11</span><br><span class="line">│   │       └── values-v14</span><br><span class="line">│   └── rs</span><br><span class="line">│       ├── debug</span><br><span class="line">│       └── release</span><br><span class="line">├── source</span><br><span class="line">│   ├── aidl</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   └── release</span><br><span class="line">│   ├── buildConfig</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   │   └── com</span><br><span class="line">│   │   │       └── example</span><br><span class="line">│   │   │           └── gradle</span><br><span class="line">│   │   └── release</span><br><span class="line">│   │       └── com</span><br><span class="line">│   │           └── example</span><br><span class="line">│   │               └── gradle</span><br><span class="line">│   ├── r</span><br><span class="line">│   │   ├── debug</span><br><span class="line">│   │   │   └── com</span><br><span class="line">│   │   │       └── example</span><br><span class="line">│   │   │           └── gradle</span><br><span class="line">│   │   └── release</span><br><span class="line">│   │       └── com</span><br><span class="line">│   │           └── example</span><br><span class="line">│   │               └── gradle</span><br><span class="line">│   └── rs</span><br><span class="line">│       ├── debug</span><br><span class="line">│       └── release</span><br><span class="line">└── symbols</span><br><span class="line">    ├── debug</span><br><span class="line">    └── release</span><br><span class="line">88 directories</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>##最后的吐槽##<br>吐槽一下。。。用ant脚本的（也许你没有接触过。。）。在以前你用ant 脚本打包apk的时候需要打包不同包名，你需要用ant 读取<code>AndroidManifest.xml</code> 然后又正则匹配替换里面packagename 参数。。虽然描述得过程很简单，你真去写的时候你就蛋疼了（对于一个ant外行人来说，个人感觉ant的学习曲线太陡峭了，如果是两年前的我，可能还写得出这样的ant脚本（当年费了很大的功夫学习了一个多星期），不过，因为很少用到（后来知道maven了。。果断放弃了ant，为什么不在android使用maven？ 因为，android 的maven 插件式非官方的，而且现在看来maven 的xml实在很复杂，看起来就头疼））*</p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/05/22/android/androidaccess/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          移动应用使用场景边界测试笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/05/10/android/androidpageradapter/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android AdapterView 源码分析以及其相关回收机制的分析</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android/android4gradle" data-title="用Gradle 构建你的android程序" data-url="http://blog.gfdsa.net/2013/05/19/android/android4gradle/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

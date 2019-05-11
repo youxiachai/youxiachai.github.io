@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>重构博客园Android App | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##前言##第一个全功能的非官方android客户端已经过去一年了…目前貌似已经不再更新的样子?最近发现,在android 4.1上运行的时候,列表都不能滚动了..而且,原界面设计,也不适合放在android 平板上使用,看了一下源码,跟我的编写风格出入挺大的,于是,就写一个我的博客园android 客户端. ps: 本人在广州正在 找nodejs 工作 不知道有木有推荐一下? 联系邮箱:youx">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重构博客园Android App">
+<meta property="og:url" content="http://blog.gfdsa.net/2013/06/20/android/cnblogsAppRefactor/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="##前言##第一个全功能的非官方android客户端已经过去一年了…目前貌似已经不再更新的样子?最近发现,在android 4.1上运行的时候,列表都不能滚动了..而且,原界面设计,也不适合放在android 平板上使用,看了一下源码,跟我的编写风格出入挺大的,于是,就写一个我的博客园android 客户端. ps: 本人在广州正在 找nodejs 工作 不知道有木有推荐一下? 联系邮箱:youx">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.gfdsa.net/images/cnblogsapp/phoneNav.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/cnblogsapp/phonenews.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/cnblogsapp/phonebloglist.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/cnblogsapp/tabletNewsList.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/images/cnblogsapp/tabletbloglist.jpg">
+<meta property="og:image" content="http://blog.gfdsa.net/img/pay_encourage.png">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.279Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重构博客园Android App">
+<meta name="twitter:description" content="##前言##第一个全功能的非官方android客户端已经过去一年了…目前貌似已经不再更新的样子?最近发现,在android 4.1上运行的时候,列表都不能滚动了..而且,原界面设计,也不适合放在android 平板上使用,看了一下源码,跟我的编写风格出入挺大的,于是,就写一个我的博客园android 客户端. ps: 本人在广州正在 找nodejs 工作 不知道有木有推荐一下? 联系邮箱:youx">
+<meta name="twitter:image" content="http://blog.gfdsa.net/images/cnblogsapp/phoneNav.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-android/cnblogsAppRefactor" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/06/20/android/cnblogsAppRefactor/" class="article-date">
+  	<time datetime="2013-06-19T16:00:00.000Z" itemprop="datePublished">6月 20 2013</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      重构博客园Android App
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##前言##<br>第一个全功能的非官方android客户端已经过去一年了…目前貌似已经不再更新的样子?最近发现,在android 4.1上运行的时候,列表都不能滚动了..而且,原界面设计,也不适合放在android 平板上使用,看了一下源码,跟我的编写风格出入挺大的,于是,就写一个我的博客园android 客户端.</p>
+<p><strong>ps: 本人在广州正在 找nodejs 工作 不知道有木有推荐一下? 联系邮箱:<a href="mailto:youxiachai@gmail.com" target="_blank" rel="noopener">youxiachai@gmail.com</a></strong></p>
+<a id="more"></a>
+<p>##客户端规划##<br>看了一下,博客园开放的API,没发现有闪存的API,所以没有目前暂时不打算实现关于用户信息这块的内容,目前提供来看用户登录最大的作用也就收藏一个文章,个人感觉意义不大….</p>
+<p>###目标:###</p>
+<ol>
+<li>自适应android 手机和平板</li>
+<li>扁平化的设计风格</li>
+<li>文章自动离线保存</li>
+<li>支持代码样式的博客内文</li>
+</ol>
+<p>然后花了昨天和今天,两天时间,终于把一个原型app 完成,看了一下,完成度还挺高的,首先要感谢<a href="http://www.cnblogs.com/walkingp/" target="_blank" rel="noopener">@walkingp</a> 的贡献.</p>
+<p>###当前版本的进度:###</p>
+<ol>
+<li>android 和平板的响应式设计</li>
+<li>完成新闻列表,和博客列表的api</li>
+</ol>
+<p>编码花了两天,前天,写设计稿,单元测试,昨天敲代码,今天发布文档…</p>
+<p>###TODOLIST###</p>
+<ol>
+<li>完善界面</li>
+<li>实现新闻内容和博文内容的显示 </li>
+<li>博文内容里面的代码支持样式(长期计划)</li>
+</ol>
+<p>##自适应设计##<br>现在android 平板已经不少了,android其实提供了一套很好用于兼容,手机和平板的机制,让我们不需像ios 那样做两个app..</p>
+<p>看图吧</p>
+<p>###手机导航###<br>手机上显示的导航为抽屉式导航:</p>
+<p><strong>以下均为示意图,吐槽难看,前面已经说过原因了…</strong></p>
+<p><img src="/images/cnblogsapp/phoneNav.jpg" alt="抽屉式导航"></p>
+<p>新闻列表</p>
+<p><img src="/images/cnblogsapp/phonenews.jpg" alt="新闻列表"></p>
+<p>博客列表</p>
+<p><img src="/images/cnblogsapp/phonebloglist.jpg" alt="博客列表"></p>
+<p>###平板导航###<br>平板上显示为 actionbar Tabs 式导航:</p>
+<p>新闻列表</p>
+<p><img src="/images/cnblogsapp/tabletNewsList.jpg" alt="新闻列表"></p>
+<p>博客列表</p>
+<p><img src="/images/cnblogsapp/tabletbloglist.jpg" alt="博客列表"></p>
+<p>有兴趣当白老鼠的可以下载打包好的APK(<a href="https://github.com/youxiachai/CnBlogs4Android" target="_blank" rel="noopener">项目主页</a>))….不过,不保证能够完美运行在所有android上…..</p>
+<p>下一次再见就是项目完成的时候了….目前没有ROADMAP….</p>
+<p>##支持本项目##<br>如果,你对这个有点兴趣,愿意支持一下,没有什么比捐点线实在了…</p>
+<p><a href="http://me.alipay.com/youxilua" target="_blank" rel="noopener"><img src="/img/pay_encourage.png" alt></a></p>
+<p>##关于本项目用到的库##<br>这个项目基于gradle 构建(发现 0.4.2 还是有bug…作为保留工具,目前主力工具还是adt)…由于依赖库的位置问题,目前而言,还不能直接fork就能跑..而且也不建议这个时候下载,或者fork,因为,还有很多地方会有改动.</p>
+<p>项目地址 : <a href="https://github.com/youxiachai/CnBlogs4Android" target="_blank" rel="noopener">https://github.com/youxiachai/CnBlogs4Android</a></p>
+<p>###本人写的类库###</p>
+<p>ActionTitleBar : <a href="https://github.com/youxiachai/ActionTitleBar" target="_blank" rel="noopener">https://github.com/youxiachai/ActionTitleBar</a></p>
+<p>OneXListView : <a href="https://github.com/youxiachai/OneXListview" target="_blank" rel="noopener">https://github.com/youxiachai/OneXListview</a></p>
+<p>ajaxQuery : <a href="https://github.com/youxiachai/ajaxAquery" target="_blank" rel="noopener">https://github.com/youxiachai/ajaxAquery</a></p>
+<p>嗯..以上类库目前皆无文档….不过,以后会有的…</p>
+<p>###公共类库###</p>
+<p>SlidingMenu : <a href="https://github.com/jfeinstein10/SlidingMenu" target="_blank" rel="noopener">https://github.com/jfeinstein10/SlidingMenu</a></p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/06/26/pomelo/pomelo-faq/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Pomelo Issue Faq(Pomelo 常见问题集)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/06/17/pomelo/pomelo_study_appserver/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用Pomelo 搭建一个简易的推送平台</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android/cnblogsAppRefactor" data-title="重构博客园Android App" data-url="http://blog.gfdsa.net/2013/06/20/android/cnblogsAppRefactor/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>

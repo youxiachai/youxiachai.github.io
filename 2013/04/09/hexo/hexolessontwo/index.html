@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Hexo 主题制作 | youxiachai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##主题相关变量## ###site &amp;lt;% site %&amp;gt;### 123456789&amp;#123;&quot;posts&quot;: &quot; 所有文章，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&quot;,&quot;pages&quot;: &quot; 所有页面，根据发表日期降序排列 [Collection事件](">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 主题制作">
+<meta property="og:url" content="http://blog.gfdsa.net/2013/04/09/hexo/hexolessontwo/index.html">
+<meta property="og:site_name" content="youxiachai">
+<meta property="og:description" content="##主题相关变量## ###site &amp;lt;% site %&amp;gt;### 123456789&amp;#123;&quot;posts&quot;: &quot; 所有文章，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&quot;,&quot;pages&quot;: &quot; 所有页面，根据发表日期降序排列 [Collection事件](">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.gfdsa.net/images/renderpage1.png">
+<meta property="og:image" content="http://blog.gfdsa.net/images/renderpage2.png">
+<meta property="og:updated_time" content="2019-05-11T17:21:27.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo 主题制作">
+<meta name="twitter:description" content="##主题相关变量## ###site &amp;lt;% site %&amp;gt;### 123456789&amp;#123;&quot;posts&quot;: &quot; 所有文章，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&quot;,&quot;pages&quot;: &quot; 所有页面，根据发表日期降序排列 [Collection事件](">
+<meta name="twitter:image" content="http://blog.gfdsa.net/images/renderpage1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="youxiachai" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+   
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?75f5de70aa60d9d2b194636cd8b7b621";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars1.githubusercontent.com/u/929502?v=3&amp;s=150">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">youxiachai</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个在IT业界打杂的程序猿</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/youxiachai" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/youxiachai/" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/youxilua" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/u/0/+%E4%B8%8E%E9%82%BB%E5%BA%84/about/op/svuwn" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/Tom_achai" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-hexo/hexolessontwo" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/04/09/hexo/hexolessontwo/" class="article-date">
+  	<time datetime="2013-04-08T21:00:00.000Z" itemprop="datePublished">4月 9 2013</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo 主题制作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##主题相关变量##</p>
+<p>###site <code>&lt;% site %&gt;</code>###</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="string">"posts"</span>: <span class="string">" 所有文章，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"pages"</span>: <span class="string">" 所有页面，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"categories "</span>: <span class="string">"所有分类，根据字母顺序排列, [Taxonomy 事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#taxonomy)"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"tags "</span>: <span class="string">"所有标签，根据字母顺序排列[ Taxonomy 事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#taxonomy)"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>例如获取所有文章标题:</p>
+<p><code>&lt;% site.posts.each(function(item){ %&gt;
+ &lt;%= item.title%&gt;
+&lt;% }); %&gt;</code></p>
+<p>###Page <code>&lt;% page %&gt;</code>###<br>注意 <strong>页面的资料，内容根据不同页面而有所差异，由 Generator 所控制</strong></p>
+<p>####下面为page,post 对象内容:####</p>
+<p><strong>post</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="string">"title"</span>: <span class="string">"文章标题"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"date"</span>: <span class="string">"文章的发布日期（[Moment.js 库](http://momentjs.com/)）"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"updated"</span>: <span class="string">"文章的更新日期（[Moment.js 库](http://momentjs.com/)）"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"comments"</span>: <span class="string">" 开启此文章的留言功能 boolean 值"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"layout"</span>: <span class="string">" 文章布局"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"content"</span>: <span class="string">"文章内文"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"excerpt"</span>: <span class="string">" 文章摘要（内文中 &lt;!-- more --&gt; 之前的内容）"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"source"</span>: <span class="string">"about/index.html 文件的相对路径"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"path"</span>: <span class="string">"about/index.html 文章的相对路径"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"ctime"</span>: <span class="string">"2013-04-05T14:38:36.000Z"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"mtime"</span>: <span class="string">"2013-04-05T14:38:41.000Z"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"permalink"</span>: <span class="string">"http://yoursite.com/about/index.html 完整的网络访问路径"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"full_path"</span>: <span class="string">"D:\\hexo11/source/about/index.html 原始文件路径"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"categories"</span> : <span class="string">"&#123;&#125;"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"tags"</span>: <span class="string">"&#123;&#125;"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"_id"</span>: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>page 和 post 的差别不大，仅在于 page 没有categories和tags变量。<br>有些变量貌似文档没写,这里就补充了一下…</p>
+<p><strong>注意,这里的page属于单个 collection 迭代的单个对象</strong></p>
+<p><strong>Generator控制 的page</strong></p>
+<p>基础布局模板:</p>
+<p><strong>page为  <a href="http://zespia.tw/hexo/zh-CN/docs/collection.html#collection" target="_blank" rel="noopener">Collection事件</a></strong></p>
+<ul>
+<li>layout</li>
+<li>archive</li>
+<li>category</li>
+<li>index</li>
+<li>tag</li>
+</ul>
+<p>例如在以上模板中可以用collection事件来获得具体的page内容:</p>
+<p><code>&lt;% page.posts.each(function(item){ %&gt;
+ &lt;%= item.title%&gt;
+&lt;% }); %&gt;</code></p>
+<p><strong>page为  post的内容的</strong></p>
+<ul>
+<li>page</li>
+<li>post</li>
+<li>自定义模板</li>
+</ul>
+<p>在以上模板中可以直接<code>&lt;%= page.title %&gt;</code>获得对应的内容.</p>
+<p>###config <code>&lt;% config %&gt;</code>###</p>
+<p> 全局设定，即<a href="http://zespia.tw/hexo/zh-CN/docs/configure.html" target="_blank" rel="noopener">_config.yml</a>的内容</p>
+<p>###theme <code>&lt;% theme %&gt;</code>###<br>主题设定，即主题文件夹内_config.yml的内容，根据不同主题而有所差异</p>
+<p>###<strong>（双底线）`&lt;% </strong>(‘string’) %&gt;`###</p>
+<ul>
+<li>取得 <a href="http://zespia.tw/hexo/zh-CN/docs/global-variables.html#i18n" target="_blank" rel="noopener">国际化</a>（i18n） 字串 参考默认主题的 <code>languages/</code>下的文件</li>
+</ul>
+<p>例如:</p>
+<p><code>&lt;%= __(&#39;home&#39;)%&gt;</code></p>
+<p>##渲染流程##<br>hexo v1.1.2的主题渲染,有两种渲染方式</p>
+<p>###第一种基础布局渲染###</p>
+<p><img src="/images/renderpage1.png" alt><br>你也可以在主题中自定其他布局，例如link或photo之类的，若找不到自定的布局的话，则会根据 Generator 的不同，使用相对应的布局代替。<br>（至少要有index布局)</p>
+<p>###第二种带layout 布局###<br>与第一种不同的是,多了一个全局的模板,layout.ejs 文件可以用这个代码<code>&lt;%- body %&gt;</code>把<strong>page对象传递到下面的模板</strong></p>
+<p><img src="/images/renderpage2.png" alt></p>
+<p>##加载动态组件##<br>对于一个静态博客而言,最大的不便就是无法进行评论,不过关于这块,其实,已经有很多解决方案,下面以中国的多说为例</p>
+<p>我们只需要在相应的模板加载对应的代码即可…例如</p>
+<script src="https://gist.github.com/youxiachai/5349668.js" async="true"></script>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/04/25/mqtt/mqttlessone/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          MQTT 折腾笔记之协议简读
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/04/04/hexo/hexolessonone/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hexo 简明入门教程（一）</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1567310" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="hexo/hexolessontwo" data-title="Hexo 主题制作" data-url="http://blog.gfdsa.net/2013/04/09/hexo/hexolessontwo/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"youxiachai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 youxiachai
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="/js/main.js"></script>
+
+  </div>
+</body>
+</html>
