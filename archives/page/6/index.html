@@ -135,7 +135,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
+						<a href="/tags/MQTT/" style="font-size: 10px;">MQTT</a> <a href="/tags/android/" style="font-size: 18.57px;">android</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/appframework/" style="font-size: 10px;">appframework</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/game/" style="font-size: 11.43px;">game</a> <a href="/tags/hexo/" style="font-size: 11.43px;">hexo</a> <a href="/tags/html5/" style="font-size: 11.43px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 12.86px;">iOS</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/kotlin/" style="font-size: 10px;">kotlin</a> <a href="/tags/life/" style="font-size: 11.43px;">life</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/node/" style="font-size: 20px;">node</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/phonegap/" style="font-size: 10px;">phonegap</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/pomelo/" style="font-size: 15.71px;">pomelo</a> <a href="/tags/sequelize/" style="font-size: 10px;">sequelize</a> <a href="/tags/summary/" style="font-size: 14.29px;">summary</a> <a href="/tags/unity3d/" style="font-size: 12.86px;">unity3d</a> <a href="/tags/weekly/" style="font-size: 17.14px;">weekly</a> <a href="/tags/社科人文/" style="font-size: 10px;">社科人文</a>
 					</div>
 				</section>
 				
@@ -198,6 +198,54 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       
+  
+    <article id="post-pomelo/pomelo_study_appserver" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/06/17/pomelo/pomelo_study_appserver/" class="article-date">
+  	<time datetime="2013-06-16T16:00:00.000Z" itemprop="datePublished">6月 17 2013</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pomelo/">pomelo</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/06/17/pomelo/pomelo_study_appserver/">用Pomelo 搭建一个简易的推送平台</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##前言##<br>实际上,个人感觉,pomelo 目前提供的两个默认<code>sioconnector</code>和<code>hybridconnector</code> 使用的协议并不适合用于做手机推送平台,在pomelo的一份公开ppt里面,有提到过, 网易的消息推送平台是基于pomelo开发的 (一个frontend 支持30w 长连接,消耗了3g 内存,如果我没记错数据应该是这样),不过,这里用的前端(frontend)实现的是基于MQTT协议,我估计这个基于MQTT协议实现的frontend,基本不可能开源出来.这里只是说,默认提供的frontend不适合用于构建大型的推送平台(c10m规模的),一般而言(c10k级别的),个人感觉还是够用的.</p>
+<p>为了展示,更多pomelo 的相关特性,可能这里的逻辑业务,与实际有所不同.敬请注意</p>
+        
+          <p class="article-more-link">
+            <a href="/2013/06/17/pomelo/pomelo_study_appserver/#more">more >></a>
+          </p>
+        
+      
+    </div>
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-http/webhttpauth" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -483,53 +531,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-android/android4gradledenp" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/05/22/android/android4gradledenp/" class="article-date">
-  	<time datetime="2013-05-21T16:00:00.000Z" itemprop="datePublished">5月 22 2013</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/05/22/android/android4gradledenp/">用Gradle 构建你的android程序-依赖管理篇</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##前言##<br>续上一篇《用Gradle 构建你的android程序》，这次把上次没写的关于，如何用gralde 构建带有依赖的项目补全吧。</p>
-        
-          <p class="article-more-link">
-            <a href="/2013/05/22/android/android4gradledenp/#more">more >></a>
-          </p>
-        
-      
-    </div>
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
     <article id="post-android/androidaccess" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -577,6 +578,53 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-android/android4gradledenp" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/05/22/android/android4gradledenp/" class="article-date">
+  	<time datetime="2013-05-21T16:00:00.000Z" itemprop="datePublished">5月 22 2013</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/05/22/android/android4gradledenp/">用Gradle 构建你的android程序-依赖管理篇</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##前言##<br>续上一篇《用Gradle 构建你的android程序》，这次把上次没写的关于，如何用gralde 构建带有依赖的项目补全吧。</p>
+        
+          <p class="article-more-link">
+            <a href="/2013/05/22/android/android4gradledenp/#more">more >></a>
+          </p>
+        
+      
+    </div>
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-android/android4gradle" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -610,53 +658,6 @@ var _hmt = _hmt || [];
         
           </p><p class="article-more-link">
             <a href="/2013/05/19/android/android4gradle/#more">more >></a>
-          </p>
-        
-      
-    </div>
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-android/androidpageradapter" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/05/10/android/androidpageradapter/" class="article-date">
-  	<time datetime="2013-05-09T16:00:00.000Z" itemprop="datePublished">5月 10 2013</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/05/10/android/androidpageradapter/">Android AdapterView 源码分析以及其相关回收机制的分析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##前言##<br>忽然，发现，网上的公开资料都是教你怎么继承一个baseadapter，然后重写那几个方法，再调用相关view的 setAdpater()方法， 接着，你的item 就显示在手机屏幕上了。很少有人关注android adpater模式机制的实现原理，比较深入的也不过是说说adapter getview()中的回收情况。今天把相关的源码看了一遍，把自己的理解记录下来。<br>
-        
-          </p><p class="article-more-link">
-            <a href="/2013/05/10/android/androidpageradapter/#more">more >></a>
           </p>
         
       
