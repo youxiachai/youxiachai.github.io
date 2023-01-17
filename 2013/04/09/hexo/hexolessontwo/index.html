@@ -1,0 +1,109 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Hexo 主题制作</title><meta name="description" content="一个在IT业界打杂的程序猿"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '75f5de70aa60d9d2b194636cd8b7b621';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="##主题相关变量#####site &amp;lt;% site %&amp;gt;###
+&amp;#123;
+&amp;quot;posts&amp;quot;: &amp;quot; 所有文章，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&amp;quot;,
+
+&amp;quot;pages&amp;quot;: &amp;quot; 所有页面，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&amp;quot;,
+
+&amp;quot;categories &amp;quot;: &amp;quot;所有分类，根据字母顺序排列, [Taxonomy 事件](h.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">youxiachai's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Hexo 主题制作</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile is-hidden"></div><div class="column is-9"><header class="my-4"><a href="/tags/hexo"><i class="tag post-item-tag">hexo</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Hexo 主题制作</h1><time class="has-text-grey" datetime="2013-04-08T21:00:00.000Z">4月 9 2013</time><article class="mt-2 post-content"><p>##主题相关变量##<br>###site <code>&lt;% site %&gt;</code>###</p>
+<pre><code class="js">&#123;
+&quot;posts&quot;: &quot; 所有文章，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&quot;,
+
+&quot;pages&quot;: &quot; 所有页面，根据发表日期降序排列 [Collection事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#collection)&quot;,
+
+&quot;categories &quot;: &quot;所有分类，根据字母顺序排列, [Taxonomy 事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#taxonomy)&quot;,
+
+&quot;tags &quot;: &quot;所有标签，根据字母顺序排列[ Taxonomy 事件](http://zespia.tw/hexo/zh-CN/docs/collection.html#taxonomy)&quot;
+&#125;
+</code></pre>
+<span id="more"></span>
+<p>例如获取所有文章标题:</p>
+<p><code>&lt;% site.posts.each(function(item)&#123; %&gt;  &lt;%= item.title%&gt; &lt;% &#125;); %&gt;</code></p>
+<p>###Page <code>&lt;% page %&gt;</code>###<br>注意 <strong>页面的资料，内容根据不同页面而有所差异，由 Generator 所控制</strong></p>
+<p>####下面为page,post 对象内容:####</p>
+<p><strong>post</strong></p>
+<pre><code class="js">&#123;
+&quot;title&quot;: &quot;文章标题&quot;,
+
+&quot;date&quot;: &quot;文章的发布日期（[Moment.js 库](http://momentjs.com/)）&quot;,
+
+&quot;updated&quot;: &quot;文章的更新日期（[Moment.js 库](http://momentjs.com/)）&quot;,
+
+&quot;comments&quot;: &quot; 开启此文章的留言功能 boolean 值&quot;,
+
+&quot;layout&quot;: &quot; 文章布局&quot;,
+
+&quot;content&quot;: &quot;文章内文&quot;,
+
+&quot;excerpt&quot;: &quot; 文章摘要（内文中 &lt;!-- more --&gt; 之前的内容）&quot;,
+
+&quot;source&quot;: &quot;about/index.html 文件的相对路径&quot;,
+
+&quot;path&quot;: &quot;about/index.html 文章的相对路径&quot;,
+
+&quot;ctime&quot;: &quot;2013-04-05T14:38:36.000Z&quot;,
+
+&quot;mtime&quot;: &quot;2013-04-05T14:38:41.000Z&quot;,
+
+&quot;permalink&quot;: &quot;http://yoursite.com/about/index.html 完整的网络访问路径&quot;,
+
+&quot;full_path&quot;: &quot;D:\\hexo11/source/about/index.html 原始文件路径&quot;,
+
+&quot;categories&quot; : &quot;&#123;&#125;&quot;,
+
+&quot;tags&quot;: &quot;&#123;&#125;&quot;
+
+&quot;_id&quot;: 1
+&#125;
+</code></pre>
+<p>page 和 post 的差别不大，仅在于 page 没有categories和tags变量。<br>有些变量貌似文档没写,这里就补充了一下…</p>
+<p><strong>注意,这里的page属于单个 collection 迭代的单个对象</strong></p>
+<p><strong>Generator控制 的page</strong></p>
+<p>基础布局模板:</p>
+<p><strong>page为  <a target="_blank" rel="noopener" href="http://zespia.tw/hexo/zh-CN/docs/collection.html#collection">Collection事件</a></strong></p>
+<ul>
+<li>layout</li>
+<li>archive</li>
+<li>category</li>
+<li>index</li>
+<li>tag</li>
+</ul>
+<p>例如在以上模板中可以用collection事件来获得具体的page内容:</p>
+<p><code>&lt;% page.posts.each(function(item)&#123; %&gt;  &lt;%= item.title%&gt; &lt;% &#125;); %&gt;</code></p>
+<p><strong>page为  post的内容的</strong></p>
+<ul>
+<li>page</li>
+<li>post</li>
+<li>自定义模板</li>
+</ul>
+<p>在以上模板中可以直接<code>&lt;%= page.title %&gt;</code>获得对应的内容.</p>
+<p>###config <code>&lt;% config %&gt;</code>###</p>
+<p> 全局设定，即<a target="_blank" rel="noopener" href="http://zespia.tw/hexo/zh-CN/docs/configure.html">_config.yml</a>的内容</p>
+<p>###theme <code>&lt;% theme %&gt;</code>###<br>主题设定，即主题文件夹内_config.yml的内容，根据不同主题而有所差异</p>
+<p>###__（双底线）<code>&lt;% __(&#39;string&#39;) %&gt;</code>###</p>
+<ul>
+<li>取得 <a target="_blank" rel="noopener" href="http://zespia.tw/hexo/zh-CN/docs/global-variables.html#i18n">国际化</a>（i18n） 字串 参考默认主题的 <code>languages/</code>下的文件</li>
+</ul>
+<p>例如:</p>
+<p><code>&lt;%= __(&#39;home&#39;)%&gt;</code></p>
+<p>##渲染流程##<br>hexo v1.1.2的主题渲染,有两种渲染方式</p>
+<p>###第一种基础布局渲染###</p>
+<p><img src="/images/renderpage1.png"><br>你也可以在主题中自定其他布局，例如link或photo之类的，若找不到自定的布局的话，则会根据 Generator 的不同，使用相对应的布局代替。<br>（至少要有index布局)</p>
+<p>###第二种带layout 布局###<br>与第一种不同的是,多了一个全局的模板,layout.ejs 文件可以用这个代码<code>&lt;%- body %&gt;</code>把<strong>page对象传递到下面的模板</strong></p>
+<p><img src="/images/renderpage2.png"></p>
+<p>##加载动态组件##<br>对于一个静态博客而言,最大的不便就是无法进行评论,不过关于这块,其实,已经有很多解决方案,下面以中国的多说为例</p>
+<p>我们只需要在相应的模板加载对应的代码即可…例如</p>
+<script src="https://gist.github.com/youxiachai/5349668.js" async="true"></script>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2013/04/25/mqtt/mqttlessone/" title="MQTT 折腾笔记之协议简读"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: MQTT 折腾笔记之协议简读</span></a><a class="button is-default" href="/2013/04/04/hexo/hexolessonone/" title="Hexo 简明入门教程（一）"><span class="has-text-weight-semibold">下一页: Hexo 简明入门教程（一）</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><div id="disqus_thread"></div><article class="mt-6 comment-container" id="disqus"><script>var disqus_config = function () {this.page.url = 'https://blog.gfdsa.net//2013/04/09/hexo/hexolessontwo/';this.page.identifier = 'bloggfdsanet';};</script><script>(function() {var d = document, s = d.createElement('script');s.src = 'https://bloggfdsanet.disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();</script><script id="dsq-count-scr" src="//blog-pubgj2togw.disqus.com/count.js" async></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com/Tom_achai"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/youxiachai"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> youxiachai 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

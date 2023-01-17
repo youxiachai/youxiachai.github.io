@@ -1,0 +1,121 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Hello Kraken.js!</title><meta name="description" content="一个在IT业界打杂的程序猿"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '75f5de70aa60d9d2b194636cd8b7b621';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="前言kraken.js 由paypal 公司开源的一个用于快速开发基于Express.js框架应用的快速开发工具, 因为kraken 并没有在Express.js基础上更改多少东西,只是在原来的express基础上补充了一些约定开发的规则, 让开发根据便捷.
+
+
+你好,世界!要创建一个kraken 项目只需要非常简单的三步走:
+
+安装必备工具
+
+  Linux or Mac sudo npm install -g yo generator-kraken Windows  npm install -g yo generator-kraken
+
+
+创建kraken项目 只需要一行代码,然后,看着提示语,输入一些东西,一个项目就这样创建完毕.
+
+yo kraken
+
+
+运行kraken项目 还是只需要一行代码
+
+.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">youxiachai's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Hello Kraken.js!</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E5%A5%BD-%E4%B8%96%E7%95%8C"><span class="toc-text">你好,世界!</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E5%AE%9A%E5%BC%80%E5%8F%91"><span class="toc-text">约定开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-x2F-config"><span class="toc-text">配置(&#x2F;config)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8-x2F-controllers"><span class="toc-text">控制器(&#x2F;controllers)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%8E%A7%E5%88%B6"><span class="toc-text">路由控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%AD%E9%97%B4%E4%BB%B6-%E5%92%8C-%E5%91%A8%E6%9C%9F%E6%8E%A7%E5%88%B6"><span class="toc-text">自定义中间件 和 周期控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/node"><i class="tag post-item-tag">node</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Hello Kraken.js!</h1><time class="has-text-grey" datetime="2013-11-29T16:00:00.000Z">11月 30 2013</time><article class="mt-2 post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>kraken.js 由paypal 公司开源的一个用于快速开发基于Express.js框架应用的快速开发工具, 因为kraken 并没有在Express.js基础上更改多少东西,只是在原来的express基础上补充了一些约定开发的规则, 让开发根据便捷.</p>
+<span id="more"></span>
+
+<h2 id="你好-世界"><a href="#你好-世界" class="headerlink" title="你好,世界!"></a>你好,世界!</h2><p>要创建一个kraken 项目只需要非常简单的三步走:</p>
+<ol>
+<li><p>安装必备工具</p>
+<blockquote>
+<p>  Linux or Mac <br/><br><code>sudo npm install -g yo generator-kraken</code> <br/><br>Windows <br/><br><code> npm install -g yo generator-kraken</code></p>
+</blockquote>
+</li>
+<li><p>创建kraken项目 <br/><br>只需要一行代码,然后,看着提示语,输入一些东西,一个项目就这样创建完毕.</p>
+<blockquote>
+<p><code>yo kraken</code></p>
+</blockquote>
+</li>
+<li><p>运行kraken项目 <br /><br>还是只需要一行代码</p>
+<blockquote>
+<p><code>npm start</code></p>
+</blockquote>
+</li>
+</ol>
+<p>以上三行代码即可,完成一个kraken项目的创建了.</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h3><ol>
+<li><p><code>yo kraken</code> 你输入项目名字的时候,会在当前项目创建与该项目名字一样的文件夹,记得<code>cd</code> 进去文件夹再去运行 <code>npm start</code></p>
+</li>
+<li><p>注意<code>NODE_ENV</code>的设置,kraken的配置是会根据当前<code>NODE_ENV</code>进行变化,所以如果跑不通的时候最好检查一下当前的<code>NODE_ENV</code>.默认情况下,<code>NODE_ENV</code>没有设置或者设置了<code>development</code>,启动的时候,<code>kraken</code> 会默认加载<code>./public/templates</code> 下的模板,设置了其他值的时候,就会去加载<code>./.build/templates</code> 而这个当你在<code>kraken</code> 项目目录下运行<code>grunt build</code> 就会出现<code>.build</code> 该目录了用于部署在<code>NODE_ENV</code>设置为<code>production</code>或者其他值的时候加载.</p>
+</li>
+</ol>
+<p>查看你当前系统的<code>NODE_ENV</code>环境</p>
+<blockquote>
+<p>Linux or Mac</p>
+<blockquote>
+<p><code>echo $NODE_ENV</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Windows</p>
+<blockquote>
+<p><code>echo %NODE_ENV%</code></p>
+</blockquote>
+</blockquote>
+<h2 id="约定开发"><a href="#约定开发" class="headerlink" title="约定开发"></a>约定开发</h2><p>个人看法 <code>kraken</code> 与其说是一个框架好不如说它只不过提供了灵活,方便的用于构建Express应用的方式.</p>
+<h3 id="配置-x2F-config"><a href="#配置-x2F-config" class="headerlink" title="配置(&#x2F;config)"></a>配置(&#x2F;config)</h3><p><code>kraken</code> 在 <code>./config</code> 约定了两类配置文件:</p>
+<ol>
+<li><code>app.json</code> 用于配置,host, port, i18n ,express 等.</li>
+<li><code>middleware</code> 用于对默认中间件的配置,目前支持的中间件有<code>appsec</code>, <code>compiler</code>, <code>session</code>, <code>errorPages</code>, <code>static</code>, 详细的参数配置请阅读官方文档,这里就不赘述了.</li>
+</ol>
+<p>除此以外,<code>kraken</code> 还约定支持根据<code>NODE_ENV</code>自动匹配相应的配置文件,规则是:</p>
+<blockquote>
+<p><code>app-NODE_ENV.json</code></p>
+</blockquote>
+<p>例如, 当前<code>NODE_ENV</code>是<code>development</code>, 你在目录下有一个<code>app-development.json</code>的文件话,就会优先读取该文件的配置.</p>
+<h3 id="控制器-x2F-controllers"><a href="#控制器-x2F-controllers" class="headerlink" title="控制器(&#x2F;controllers)"></a>控制器(&#x2F;controllers)</h3><h3 id="路由控制"><a href="#路由控制" class="headerlink" title="路由控制"></a>路由控制</h3><p><code>kraken</code> 默认会自动加载<code>./controllers</code> 下的文件,进行路由控制,个人觉得,这个真心省心.接下来的写法,与express 完全一样!</p>
+<pre><code class="js">module.exports = function (server) &#123;
+    server.get(&#39;/customer&#39;, function (req, res) &#123;
+       res.send(&#39;Hello World&#39;);
+    &#125;);
+&#125;;
+</code></pre>
+<p>如果,你是express的开发者,就会越感发现,<code>kraken</code>更多的是补充了express不足的地方,除此以外跟平常用express开发毫无区别.</p>
+<h3 id="自定义中间件-和-周期控制"><a href="#自定义中间件-和-周期控制" class="headerlink" title="自定义中间件 和 周期控制"></a>自定义中间件 和 周期控制</h3><p><code>kraken</code> 将一个请求的周期定义为三级:</p>
+<ol>
+<li><code>app.requestStar</code> 请求开始</li>
+<li><code>app.requestBeforeRoute</code> 进行路由前</li>
+<li><code>app.requestAfterRoute</code> 路由后输出</li>
+</ol>
+<p>整个实现异常简洁, 有兴趣的可以去阅读源码:</p>
+<blockquote>
+<p><code>appcore.js</code> <code>line: 172 - 198</code></p>
+</blockquote>
+<p>定义一个中间件的方法与express的时候一样,只不过,现在多了一步,我们要把中间件放到哪个位置而已</p>
+<p>约定在<code>./middleware/lib</code> 下建一个文件,beforeRouteMiddleware.js</p>
+<pre><code class="js">module.exports = function () &#123;_
+    var reqCounts = 0;
+    return function (req, res, next) &#123;
+        req.counts = reqCounts | 0;
+        reqCounts++;
+        next();
+    &#125;;
+&#125;;
+</code></pre>
+<p>然后在: index.js</p>
+<pre><code class="js">var beforeRouteMiddleware =  require(&#39;./lib/middleware/beforeRouteMiddleware&#39;)
+
+app.requestBeforeRoute = function requestBeforeRoute(server) &#123;
+    server.use(beforeRouteMiddleware());
+&#125;;
+</code></pre>
+<p>与express的中间件功能一样,每请求一次,都会触发中间件. 与原生的express不同<code>krarken</code>提供了更有条例的中间件定义约定.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>kraken</code> 还有一些比较实用的功能,例如安全,还有本地化,不过这些内容,官方文档已经写得很详细了,这里就不作过多的说明. 在我看来,<code>kraken</code> 只干了一件事,就是把express条理化了,<code>kraken</code>并没有对express进行更多的封装,所以,只要会express的入手<code>kraken</code> 就像喝水一样简单. 而<code>kraken</code> 提供的约定,能够更有效率的开发Node.js的web项目.</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2013/12/31/summary/final2013/" title="2013年终总结"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: 2013年终总结</span></a><a class="button is-default" href="/2013/10/31/lifestyles/ebooklibraryselect/" title="如何选一个靠谱的正版电子书市场 -- 排版篇"><span class="has-text-weight-semibold">下一页: 如何选一个靠谱的正版电子书市场 -- 排版篇</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><div id="disqus_thread"></div><article class="mt-6 comment-container" id="disqus"><script>var disqus_config = function () {this.page.url = 'https://blog.gfdsa.net//2013/11/30/nodejs/hellokraken/';this.page.identifier = 'bloggfdsanet';};</script><script>(function() {var d = document, s = d.createElement('script');s.src = 'https://bloggfdsanet.disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();</script><script id="dsq-count-scr" src="//blog-pubgj2togw.disqus.com/count.js" async></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com/Tom_achai"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/youxiachai"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> youxiachai 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

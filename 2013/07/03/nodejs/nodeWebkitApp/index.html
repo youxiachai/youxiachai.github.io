@@ -1,0 +1,79 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>用node-webkit开发PC 客户端</title><meta name="description" content="一个在IT业界打杂的程序猿"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '75f5de70aa60d9d2b194636cd8b7b621';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="##导言##node-webkit 是一个很神奇的桌面客户端项目,正如这个项目的名字,这个项目是由node 和 webkit 构成,简单来说,就是你可以用HTML 5和 node 进行桌面客户端开发,而且客户端还是同时支持在 WIN,MAC,LINUX运行. 下面,就用一个简单的例子来展示一下node-webkit的魅力.
+
+##创建项目##
+###本例子基于Grunt构建###如果,你用过grunt,要创建一个node-webkit 非常简单,我已经写好了一个node-webkit的grunt-init的项目模板. 至于怎么安装这个模板,跟官方的教程一样.如果你是windows 用户
+
+md %USERPROFILE%\.grunt-init\node-webkit git clone git@githu.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">youxiachai's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">用node-webkit开发PC 客户端</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile is-hidden"></div><div class="column is-9"><header class="my-4"><a href="/tags/node"><i class="tag post-item-tag">node</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">用node-webkit开发PC 客户端</h1><time class="has-text-grey" datetime="2013-07-02T16:00:00.000Z">7月 3 2013</time><article class="mt-2 post-content"><p>##导言##<br>node-webkit 是一个很神奇的桌面客户端项目,正如这个项目的名字,这个项目是由node 和 webkit 构成,简单来说,就是你可以用HTML 5和 node 进行桌面客户端开发,而且客户端还是同时支持在 WIN,MAC,LINUX运行. 下面,就用一个简单的例子来展示一下node-webkit的魅力.</p>
+<span id="more"></span>
+<p>##创建项目##</p>
+<p>###本例子基于Grunt构建###<br>如果,你用过grunt,要创建一个node-webkit 非常简单,我已经写好了一个node-webkit的<code>grunt-init</code>的项目模板. 至于怎么安装这个模板,跟官方的教程一样.<br>如果你是windows 用户</p>
+<blockquote>
+<p><code>md %USERPROFILE%\.grunt-init\node-webkit</code> <br /><br><code>git clone git@github.com:youxiachai/grunt-init-node-webkit.git %USERPROFILE%\.grunt-init\node-webkit</code></p>
+</blockquote>
+<p>linux or mac</p>
+<blockquote>
+<p>git clone <a href="mailto:&#x67;&#105;&#x74;&#x40;&#103;&#105;&#116;&#104;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;">&#x67;&#105;&#x74;&#x40;&#103;&#105;&#116;&#104;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;</a>:youxiachai&#x2F;grunt-init-node-webkit.git ~&#x2F;.grunt-init&#x2F;node-webkit</p>
+</blockquote>
+<p>你只需要用</p>
+<blockquote>
+<p><code>grunt-init node-webit</code></p>
+</blockquote>
+<p>就可以创建完毕.</p>
+<pre><code class="shell">├─app.nw
+└─test
+</code></pre>
+<p>app.nw 这个目录就是我们准备要开始写的pc 客户端的项目文件夹,运行node-webkit项目很简单,只需要把node-webkit 的运行环境配置到环境变量,然后运行</p>
+<blockquote>
+<p><code>nw app.nw</code> 就可以运行起来了.<br><img src="/images/nodewebkit/nodewebkit1.jpg" alt="oscdesk1"></p>
+</blockquote>
+<p>PS: 如果你不想接触grunt,不过我建议还是学一下grunt,你可以到<a target="_blank" rel="noopener" href="https://github.com/rogerwang/node-webkit#quick-start">https://github.com/rogerwang/node-webkit#quick-start</a> 学习如何启动一个node-webkit应用.</p>
+<p>##效果图##<br><img src="/images/nodewebkit/oscdesk1.jpg" alt="oscdesk1"></p>
+<p><img src="/images/nodewebkit/oscdesk2.jpg" alt="oscdesk1"></p>
+<p>这个就是所谓的 win 8 风格的客户端了吧….界面用的框架是这货:<a target="_blank" rel="noopener" href="http://aozora.github.io/bootmetro/">http://aozora.github.io/bootmetro/</a> 90% 的时间都是调整界面…蛋疼死了……连个 win8 风格的progress 都没..让我非常伤心..也可能是alpha 的原因吧. 不过最后的效果,还是很难看,就凑合着过去吧….</p>
+<p>###开发###<br>基于node-webkit 开发pc 客户端语言支持 <code>c/c++</code>,<code>html5</code>,<code>css3</code>, <code>js</code>,<code>node api</code>.好了,现在我们开始用html 5 + css3 写一个pc 客户端吧.<br><code>node-webkit</code>本质就是一个可以跑node 的浏览器,所以,我们用web 开发的技巧来开发pc 客户端毫无问题.</p>
+<p>首先,打开<code>toolbar</code>,在<code>package.json</code>文件里面有个<code>toolbar</code>的参数,设置为<code>true</code>即可,就会见到如下图所示:</p>
+<blockquote>
+<p><img src="/images/nodewebkit/toolbar.jpg" alt="toolbar"></p>
+</blockquote>
+<p>点击那个三横线的按钮,一个chrome 风的调试窗口就出来了.</p>
+<blockquote>
+<p><img src="/images/nodewebkit/console.jpg" alt="console"></p>
+</blockquote>
+<p>开发的时候,我们修改完文件,并不需要重新运行程序来看结果,我们,可以直接点击左边的刷新按钮即可看到我们修改的运行结果.用<code>node-webkit</code>开发客户端是不是很方便了!</p>
+<p>那么接下来,要开发一个oschina pc 客户端,我们只需要知道,相关api 就行了,从android 客户端源码里面可以得到相关api…具体代码在<code>app/model/oschinaApi.js</code> 文件里面.</p>
+<p>node-webkit,已经吧相关的安全限制已经去掉,所以说,用node-webkit开发pc客户端,用webkit 发的请求不受同源限制. 用node-webkit 开发一些restful 应用是非常舒服的事情,只要有个不错的界面.关于<code>node-webkit</code>的东西也就这么些了,剩下的就是web 开发,不在本文<code>node-webkit</code>范围内,所以就不再啰嗦..</p>
+<p>##使用的开源项目##<br>界面: </p>
+<p><a target="_blank" rel="noopener" href="http://aozora.github.io/bootmetro/">http://aozora.github.io/bootmetro/</a> </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cubiq/iscroll">https://github.com/cubiq/iscroll</a></p>
+<p>模板引擎: </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/visionmedia/ejs">https://github.com/visionmedia/ejs</a></p>
+<p>##项目地址##<br>Github: </p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/youxiachai/osChinaDesktopClient">https://github.com/youxiachai/osChinaDesktopClient</a></p>
+</blockquote>
+<p>git@osc:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://git.oschina.net/youxiachai/oschinadesktopclient">http://git.oschina.net/youxiachai/oschinadesktopclient</a></p>
+</blockquote>
+<p> 程序运行: windows用户之间去到<code>app.nw</code> 目录下运行 nw.exe 即可.</p>
+<blockquote>
+<p>cd app.nw <br/> nw.exe</p>
+</blockquote>
+<p>linux 或者mac 用户 把除 index.html,package.json,app 以外的文件删除,然后将<code>node-webkit</code> 运行环境配到环境变量中运行</p>
+<blockquote>
+<p>nw app.nw</p>
+</blockquote>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2013/08/31/nodejs/gruntjsstart/" title="Grunt 新手指南"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: Grunt 新手指南</span></a><a class="button is-default" href="/2013/06/26/pomelo/pomelo-faq/" title="Pomelo Issue Faq(Pomelo 常见问题集)"><span class="has-text-weight-semibold">下一页: Pomelo Issue Faq(Pomelo 常见问题集)</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><div id="disqus_thread"></div><article class="mt-6 comment-container" id="disqus"><script>var disqus_config = function () {this.page.url = 'https://blog.gfdsa.net//2013/07/03/nodejs/nodeWebkitApp/';this.page.identifier = 'bloggfdsanet';};</script><script>(function() {var d = document, s = d.createElement('script');s.src = 'https://bloggfdsanet.disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();</script><script id="dsq-count-scr" src="//blog-pubgj2togw.disqus.com/count.js" async></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com/Tom_achai"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/youxiachai"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> youxiachai 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

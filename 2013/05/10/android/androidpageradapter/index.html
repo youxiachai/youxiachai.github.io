@@ -1,0 +1,202 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android AdapterView 源码分析以及其相关回收机制的分析</title><meta name="description" content="一个在IT业界打杂的程序猿"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '75f5de70aa60d9d2b194636cd8b7b621';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="##前言##忽然，发现，网上的公开资料都是教你怎么继承一个baseadapter，然后重写那几个方法，再调用相关view的 setAdpater()方法， 接着，你的item 就显示在手机屏幕上了。很少有人关注android adpater模式机制的实现原理，比较深入的也不过是说说adapter getview()中的回收情况。今天把相关的源码看了一遍，把自己的理解记录下来。
+
+
+##AdpaterView 概览##
+AdpaterView
+
+api手册的说明：An AdapterView is a view whose children are determined by an Adapter.
+
+实际上android里面ListView, GridView, Spinner ， Gallery等view.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">youxiachai's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Android AdapterView 源码分析以及其相关回收机制的分析</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile is-hidden"></div><div class="column is-9"><header class="my-4"><a href="/tags/android"><i class="tag post-item-tag">android</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Android AdapterView 源码分析以及其相关回收机制的分析</h1><time class="has-text-grey" datetime="2013-05-09T16:00:00.000Z">5月 10 2013</time><article class="mt-2 post-content"><p>##前言##<br>忽然，发现，网上的公开资料都是教你怎么继承一个baseadapter，然后重写那几个方法，再调用相关view的 setAdpater()方法， 接着，你的item 就显示在手机屏幕上了。很少有人关注android adpater模式机制的实现原理，比较深入的也不过是说说adapter getview()中的回收情况。今天把相关的源码看了一遍，把自己的理解记录下来。</p>
+<span id="more"></span>
+
+<p>##AdpaterView 概览##</p>
+<p><a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/widget/AdapterView.html">AdpaterView</a></p>
+<blockquote>
+<p>api手册的说明：An AdapterView is a view whose children are determined by an Adapter.</p>
+</blockquote>
+<p>实际上android里面ListView, GridView, Spinner ， Gallery等view都是基于设计模式上的设配器模式实现的，只要熟悉设配器模式的相关知识，就知道如何从源码里面找到相关的实现线索。</p>
+<p>##认识AdapterView##<br>源码链接<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AdapterView.java">https://github.com/android/platform_frameworks_base&#x2F;blob&#x2F;master&#x2F;core&#x2F;java&#x2F;android&#x2F;widget&#x2F;AdapterView.java</a></p>
+<p>要理解listview等的实现，其父类是不得不看。源码有1200多行。阅读完AdapterView,能搞明白以下问题</p>
+<ol>
+<li><p>响应数据的更改。</p>
+<blockquote>
+<p>（793 - 842）</p>
+</blockquote>
+</li>
+<li><p>知道点击view的时候，获得对应的位置.</p>
+<blockquote>
+<p>（593 - 615）</p>
+</blockquote>
+</li>
+</ol>
+<p>###响应数据的更改###<br>这里假设你已经打开了<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AdapterView.java">AdpaterView</a> 的 793 到 842 行。。</p>
+<p>在我刚开始用adapterview 的时候，最让我费劲的就是，为什么我调用adpater 的 notifyDataSetChanged() 就能更新view 的状态了呢，然后跟调用notifyDataSetInvalidated() 两者之间又有什么区别呢？以前，找了一下资料，没找到很详细的说明，现在从源码里面找答案的话，就很清晰了。</p>
+<p>首先，我们要明白一种设计模式：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F">观察者设计模式</a>。</p>
+<p>我相信你，应该能明白观察者模式是个什么样的实现了。。。</p>
+<p>AdapterView 之所以能对Adapter 的数据更新进行响应，就是因为其在Adapter上注册了一个数据观察者（AdapterDataSetObserver(793 - 842 )）的内部类，所以，我们只要对adpater 状态的改变发送一个通知，就能让AdapterView调用相应的方法了。</p>
+<blockquote>
+<p>DataSetObservable 的源码，记得要把其父类也看了。 <a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/database/DataSetObservable.java">https://github.com/android/platform_frameworks_base&#x2F;blob&#x2F;master&#x2F;core&#x2F;java&#x2F;android&#x2F;database&#x2F;DataSetObservable.java</a></p>
+</blockquote>
+<p>现在我们就能解决我们一开始的疑问notifyDataSetChanged() 与notifyDataSetInvalidated() 具体回到AdapterView 产生什么影响？</p>
+<p>我们对比一下<code>onChange()</code> 与 <code>onInvalidated()</code> 方法，就能对比得出，前者会对当前位置的状态进行同步，而后者会重置所有位置的状态。从代码的注释里面还可以获取得到更多的信息。</p>
+<p>这样，我们以后调用notifyDataSetChanged()和notifyDataSetInvalidated() 就更加明白会发生什么情况了。</p>
+<p>###点击item 怎么能够获取到当前的位置###<br>这里假设你已经打开了<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AdapterView.java">AdpaterView</a> 的 593 - 615 行。。</p>
+<p>对于<code>getPositionForView()</code> 这个方法，你肯定没用过，要搞明白为什么我们能够获取到adapterView 里面item view对应的位置，我们需要看<br>其直接子类：<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AbsListView.java">AbsListView.class</a></p>
+<blockquote>
+<p> 源码相关：（2130-2197） （2196 - 2279）</p>
+</blockquote>
+<p>这里又用到一种设计模式：<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F">委托模式</a></p>
+<p>假设你已经搞懂委托模式的概念，首先我们来看源码（2130 - 2197）。</p>
+<p>从<code>obtainView()</code> 方法名中我们可以知道，这是一个用于生成itemView的方法。把这块代码看完，以后，会不会有个疑问呢（先不用管回收那块）？ <strong>position</strong> 到哪里了？我们可以看到这个方法实际上并没有对我们的itemview 设置了任何的监听器，那为什么最后能对我们的itemview的动作进行反应呢？ </p>
+<p>接下来我们看：源码（2196 - 2279）</p>
+<p>从代码里面我们可以看出这是一个委托类，对item 的动作进行初始化，以及响应对应的操作，从源码里面我们可以获知得到，一个item view 为什么能对click，longclick，select 动作进行响应，然后，通过调用<code>performItemClick()</code> 最终把事件调用到AdapterView（292-303）的<code>performItemClick()</code> 里面的监听器方法.</p>
+<p>如果，你对委托模式不熟的话，要明白这里的话，需要花点时间。</p>
+<p>##认识 AbsListView 回收机制##</p>
+<blockquote>
+<p>源码： <a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AbsListView.java">AbsListView.class</a></p>
+</blockquote>
+<p>长期以来，都有这么一个说法，listview 会自动把不可见的view进行回收，但是长期以来，我都没看到有人对其回收机制进行分析说明</p>
+<p>###回收执行者：RecycleBin###<br>我们回到之前看过的<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AbsListView.java">AbsListView.class</a>  </p>
+<blockquote>
+<p><code>obtainView()（2130-2197）</code></p>
+</blockquote>
+<p>你会看到一个</p>
+<blockquote>
+<p><code>mRecycler</code> 的变量。</p>
+</blockquote>
+<p>接下来，通过搜索我们可以得知这个变量是在（308）进行初始化，这是一个内部类的</p>
+<blockquote>
+<p>RecycleBin的实例（6139 - 6507） </p>
+</blockquote>
+<p>看到这类，我们大致可以知道，这个类是这个absListView 回收机制的实现者。</p>
+<blockquote>
+<p>请 跳转到（6139）</p>
+</blockquote>
+<p>现在，我们来看一下这个类的注释，大体的意思这个类是用来帮助复用view的，用2个不同级别的方式进行存储（The RecycleBin has two levels of storage）（个人感觉描述得挺变扭的，还是看原文好了。。）</p>
+<ol>
+<li>ActiveViews ： 一开始显示在屏幕的view</li>
+<li>ScrapViews： 潜在的一些可以让adpater 使用的old views。</li>
+</ol>
+<p>然后，注释里面已经说了，ActiveViews 怎么变成 ScrapViews。就注释提供的信息这里我们有两个疑问。</p>
+<ol>
+<li>什么时候产生 ActiveViews。</li>
+<li>什么时候产生 ScrapViews。</li>
+</ol>
+<p>这要把这两点搞清楚了，整个回收体系也就清楚了。</p>
+<p>###AbsListView的回收机制具体实现###<br>从RecycleBin类的注释里面我们获知，回收机制的第一步就是屏幕的view 放在ActiveViews，然后通过对ActiveViews进行降级变成ScrapViews,然后通过scrapViews 进行view 的复用</p>
+<p>通过，一番的检索，我们在<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/ListView.java">Listview.class</a>(1562行里面找到<code>fillActiveViews()</code>的调用）。</p>
+<p>我们观察一下<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/ListView.java">Listview.class</a>（1460 - 1713） 看一下<code>layoutChildren()</code>这个方法是干嘛用的。</p>
+<p>当我们看到（1550）行的时候，就会发现了这个回收类的赋值。接下来我们看下<br>listview是如何利用回收机制：</p>
+<ol>
+<li>当数据发生改变的时候，把当前的view放到scrapviews里面，否则标记为activeViews（1557 - 1562）</li>
+<li><code>recycleBin.removeSkippedScrap();</code> 移除所有old views</li>
+<li><code> recycleBin.scrapActiveViews();</code> 刷新缓存，将当前的ActiveVies 移动到 ScrapViews。</li>
+</ol>
+<p>这里干了些事情呢？我们回到（1557 - 1562） 我们可以看到一个变量dataChanged，从单词的意思我们就可以，这里的优化规则就是基于数据是否有变化，我们通过搜索成员变量<code>mDataChanged</code>在 (1693) 的时候变成了false 接着我们在<code>makeAndAddView</code>（1751 - 1775）发现了这个变量的使用。</p>
+<p>阅读（1756 - 1766） 我们可以看到回收机制的第一次使用，如果数据没有发生改变，通过判断ActiveViews(这些些view来自（1557 - 1562）) 列表里面有没有当前 活动view，有的话直接复用已经存在的view。这样的好处就是直接复用当前已经存在的view，不需要通过adapter.getview()里面获取子view。</p>
+<p>好了，接下来我们来看下<code>makeAndAddView</code>（1751 - 1775） 是如何通过<code>adapter.getview()</code>中 获取到view。我们回到<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AbsListView.java">AbsListView.class</a>（2130 - 2194）</p>
+<p>在 （2134） 中我们看到一个很神秘的方法<code> scrapView = mRecycler.getTransientStateView(position);</code> 从单词的意思里面我们可以得知这是获取一个瞬间状态的view，这里就有个疑问什么是瞬间状态的view？通过对源码的层层分析终于在View 类的 hasTransientState()方法里面找到描述。从描述中我们得知这个方法是用来标记这个view的瞬时状态，用来告诉app无需关心其保存和恢复。从注释中，官方告诉我这种具有瞬时状态的view，用于在view动画播放等情况中。</p>
+<p>那么，我们就可以明白这句话优化的是absListView 的列表动画.</p>
+<p>接着阅读到一下代码的时候，我就困惑了</p>
+<blockquote>
+<p><code>scrapView = mRecycler.getScrapView(position);</code></p>
+</blockquote>
+<p>从这行代码里面我们可知，复用的review是跟位置有关的，我们回去在看看(ListView 1557-1563)</p>
+<blockquote>
+<pre><code>       if (dataChanged) &#123;
+            for (int i = 0; i &lt; childCount; i++) &#123;
+                recycleBin.addScrapView(getChildAt(i), firstPosition+i);
+            &#125;
+        &#125; else &#123;
+            recycleBin.fillActiveViews(childCount, firstPosition);
+        &#125;
+</code></pre>
+</blockquote>
+<p>我们可以发现，实际上这里放进回收类里面的只有当前的显示的view，并没有产生当前屏幕没有的view，但是，实际使用中，当我们进行滚屏的时候，显示下个view的时候，就已经能发现getView 第二个参数已经不为null了，那实际实现在哪里了，我们通过搜索用到RecycleBin 的方法，找到</p>
+<blockquote>
+<p><code>layoutChildren()</code></p>
+</blockquote>
+<blockquote>
+<p><code>scrollListItemsBy()</code></p>
+</blockquote>
+<blockquote>
+<p><code>onMeasure()</code></p>
+</blockquote>
+<blockquote>
+<p><code>measureHeightOfChildren()</code></p>
+</blockquote>
+<p>通过查看</p>
+<blockquote>
+<p><code>scrollListItemsBy()</code> </p>
+</blockquote>
+<p>我们就能够明白，当我们进行滚屏的时候，在listview 移除item view 的时候，把移除的item view放进了</p>
+<blockquote>
+<p><code>  recycleBin.addScrapView(last, mFirstPosition+lastIndex);</code></p>
+</blockquote>
+<p>于是生成下一个view的时候就能够复用之前的view了，搞清楚这个机制以后我们回到</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/AbsListView.java">AbsListView.class</a>（2139 - 2168）</p>
+</blockquote>
+<p>接下来代码， 解答了我们一个经典的adapter 优化方法的由来</p>
+<blockquote>
+<pre><code>  View child;
+    if (scrapView != null) &#123;
+        child = mAdapter.getView(position, scrapView, this);
+</code></pre>
+</blockquote>
+<pre><code>        if (child.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) &#123;
+            child.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+        &#125;
+
+        if (child != scrapView) &#123;
+            mRecycler.addScrapView(scrapView, position);
+            if (mCacheColorHint != 0) &#123;
+                child.setDrawingCacheBackgroundColor(mCacheColorHint);
+            &#125;
+        &#125; else &#123;
+            isScrap[0] = true;
+            child.dispatchFinishTemporaryDetach();
+        &#125;
+    &#125; else &#123;
+        child = mAdapter.getView(position, null, this);
+
+        if (child.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) &#123;
+            child.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+        &#125;
+
+        if (mCacheColorHint != 0) &#123;
+            child.setDrawingCacheBackgroundColor(mCacheColorHint);
+        &#125;
+    &#125;
+</code></pre>
+<p>实际上所谓的优化，就是通过利用已有产生的View进行复用，减少在Adapter.getView()进行类的实例化操作优化性能。</p>
+<blockquote>
+<p>从某年google io的文档中我们得知这个回收机制的效率能够提供listview 300%的效率。</p>
+</blockquote>
+<p>接着我们还明白了</p>
+<blockquote>
+<p>getView(int position, View convertView, ViewGroup parent) 这个三个参数的由来了。</p>
+</blockquote>
+<p>通过，对回收机制的分析，我们可以查看</p>
+<blockquote>
+<p>listview scrollListItemsBy()</p>
+</blockquote>
+<p>的时候应该注意到，实际上不可见的 item 是会被自动移除，那样为什么当滚动过多的item的时候会发生oom的情况了？</p>
+<p>在我们阅读完整个回收机制的时候，我们会发现回收机制实际上是通过在内存里面缓存view对象，让listview能够快速的获取view使listview的显示流畅。而导致OOM的问题也出在这里，由于整个回收机制把所有的imageview中的bitmap对象也保存下来，在进行不断的滑屏操作中，RecycleBin 类越来越大，最终导致OOM 的发生。</p>
+<p>当然，根据整个思路，要避免OOM实际上也很简单，我们只需要在虚拟机中开辟一个内存块，专门用于保存bitmap对象的 map对象（一般而言用LRU算法实现），所有的imageview的应用都通过这个map 对象进行引用，当这个map对象大于一定程度的时候释放部分bitmap，这就可以保证RecycleBin在保存这些imageview的时候，而这些imageview里面的bitmap对象时通过一个固定的内存块里面获取，只要我们开辟的用于引用的bitmap 的内存块的大小合理，那样就永远也不会发生oom了。</p>
+<p>至于其他继承自AbsListView 的View 其回收机制都一样。。</p>
+<p>##感想##<br>花了，几个小时，把AdapterView 相关源码看完，大致计算了行数有3w 来行代码了，当然，不会是一行不漏的看过去。 这里分享一个看源码的方法。首先，有接口和，抽象类的地方，一定要把所有方法看全，这一块基本上是属于要一行不漏的看完。实际上这些接口，和抽象类是我们看源码重要的索引，那些4，5k行的代码，实际上，里面的关键，都是这些接口，和相应的抽象类的扩展。</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2013/05/10/android/andoridnotifylesson/" title="Android 新Notification api 介绍"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: Android 新Notification api 介绍</span></a><a class="button is-default" href="/2013/05/05/nodejs/nodescrapingpage/" title="用nodejs 改造一个移动版本的网站"><span class="has-text-weight-semibold">下一页: 用nodejs 改造一个移动版本的网站</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><div id="disqus_thread"></div><article class="mt-6 comment-container" id="disqus"><script>var disqus_config = function () {this.page.url = 'https://blog.gfdsa.net//2013/05/10/android/androidpageradapter/';this.page.identifier = 'bloggfdsanet';};</script><script>(function() {var d = document, s = d.createElement('script');s.src = 'https://bloggfdsanet.disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();</script><script id="dsq-count-scr" src="//blog-pubgj2togw.disqus.com/count.js" async></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com/Tom_achai"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/youxiachai"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> youxiachai 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

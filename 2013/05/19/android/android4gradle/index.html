@@ -1,0 +1,331 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>用Gradle 构建你的android程序</title><meta name="description" content="一个在IT业界打杂的程序猿"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '75f5de70aa60d9d2b194636cd8b7b621';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="##前言##android gradle 的插件终于把混淆代码的task集成进去了，加上最近，android studio 用的是gradle 来构建项目， 下定决心把android gralde 构建项目的用户指南全部看完， 让不会用gradle 的人也用gradle构建android项目，让打包（注意，打包和构建是两码事）多版本android不再痛苦。最后，题外话：珍惜生命，远离ant….
+
+
+##Gradle build android 历史##Android Tools 主页 ，大概是今年2月份发布 adt21.1 的时候，忽然在主页发现了New Build System 原来是可以用gradle 来构建android项目，至于gradle是什么（既然点击进来看了应该都知道了吧。） 。然后，又看了一.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">youxiachai's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">用Gradle 构建你的android程序</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile is-hidden"></div><div class="column is-9"><header class="my-4"><a href="/tags/android"><i class="tag post-item-tag">android</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">用Gradle 构建你的android程序</h1><time class="has-text-grey" datetime="2013-05-18T16:00:00.000Z">5月 19 2013</time><article class="mt-2 post-content"><p>##前言##<br>android gradle 的插件终于把混淆代码的task集成进去了，加上最近，android studio 用的是gradle 来构建项目， 下定决心把android gralde 构建项目的用户指南全部看完， 让不会用gradle 的人也用gradle构建android项目，让打包（注意，打包和构建是两码事）多版本android不再痛苦。最后，题外话：珍惜生命，远离ant….</p>
+<span id="more"></span>
+
+<p>##Gradle build android 历史##<br><a target="_blank" rel="noopener" href="http://tools.android.com/">Android Tools 主页</a> ，大概是今年2月份发布 adt21.1 的时候，忽然在主页发现了<a target="_blank" rel="noopener" href="http://tools.android.com/tech-docs/new-build-system">New Build System</a> 原来是可以用gradle 来构建android项目，至于<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Gradle">gradle</a>是什么（既然点击进来看了应该都知道了吧。） 。然后，又看了一下<a target="_blank" rel="noopener" href="http://tools.android.com/tech-docs/new-build-system/roadmap">RoadMap</a> 那时候，还并不支持Proguard 打包，于是就没看了。。。</p>
+<p>最近，android studio 发布，终于gradle 0.4 也跟着出来了，于是，先把gradle 学了一遍，然后把<a target="_blank" rel="noopener" href="http://tools.android.com/tech-docs/new-build-system/user-guide">Gradle Plugin User Guide</a>也认真阅读了一下，根据我的个人体验，如果你对gradle 毫无了解就去看<a target="_blank" rel="noopener" href="http://tools.android.com/tech-docs/new-build-system/user-guide">Gradle Plugin User Guide</a> 可能很多地方都一头雾水，但是并不妨碍你用gradle 打包android 应用，只是，出现问题，你就可能很头疼。不过，本篇博文就是让不会gradle 也能用上 gradle 打包android 程序，因为，我也不懂gradle，所以，我把我碰到的问题的解决方案都一一列出。</p>
+<p>顺便贴上官方为什么使用gradle 的理由</p>
+<ul>
+<li>Domain Specific Language (DSL) to describe and manipulate the build logic</li>
+<li>Build files are Groovy based and allow mixing of declarative elements through the DSL and using code to manipulate the DSL elements to provide custom logic.</li>
+<li>Built-in dependency management through Maven and&#x2F;or Ivy.</li>
+<li>Very flexible. Allows using best practices but doesn’t force its own way of doing things.</li>
+<li>Plugins can expose their own DSL and their own API for build files to use.</li>
+<li>Good Tooling API allowing IDE integration</li>
+</ul>
+<p>##Gradle 基本概念##<br>首先我们学习几个gradle 的脚本语法，掌握了这几个语法，你就能非常简单的用gradle构建打包android项目了。<br>首先，我们来看下一个最简单android <code>build.gradle</code></p>
+<pre><code>	
+buildscript {
+       
+	 repositories {
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath &#39;com.android.tools.build:gradle:0.4&#39;
+        }
+    }
+
+    apply plugin: &#39;android&#39;
+
+    android {
+        compileSdkVersion 17
+    }</code></pre>
+
+<p><strong>英语的介绍都来自与 gradle官方文档， 主要后边的中文不是翻译，是补充介绍。。</strong></p>
+<p><code>buildscript&#123;&#125;</code></p>
+<blockquote>
+<p>Configures the build script classpath for this project.<br>说白了就是设置脚本的运行环境</p>
+</blockquote>
+<p><code>repositories&#123;&#125;</code></p>
+<blockquote>
+<p>Returns a handler to create repositories which are used for retrieving dependencies and uploading artifacts produced by the project. 大意就是支持java 依赖库管理（maven&#x2F;ivy）,用于项目的依赖。这也是gradle 强力的地方。。。 </p>
+</blockquote>
+<p><code>dependencies&#123;&#125;</code></p>
+<blockquote>
+<p>The dependency handler of this project. The returned dependency handler instance can be used for adding new dependencies. For accessing already declared dependencies, the configurations can be used.  依赖包的定义。支持maven&#x2F;ivy，远程，本地库，也支持单文件，如果前面定义了<code>repositories&#123;&#125;</code>maven 库，使用maven的依赖（我没接触过ivy。。）的时候只需要按照用类似于<code>com.android.tools.build:gradle:0.4</code>，gradle 就会自动的往远程库下载相应的依赖。</p>
+</blockquote>
+<p><code>apply plugin:</code></p>
+<blockquote>
+<p>声明构建的项目类型，这里当然是android了。。。</p>
+</blockquote>
+<p><code>android&#123;&#125;</code></p>
+<blockquote>
+<p>设置编译android项目的参数，接下来，我们的构建android项目的所有配置都在这里完成。</p>
+</blockquote>
+<p>##构建一个Gradle android项目##<br>首先，你要安装<a target="_blank" rel="noopener" href="http://www.gradle.org/downloads">Gradle 1.6</a> 并且，写进系统的环境变量里面，所有的命令都是默认你已经配好了gradle 的环境。而且，已经已经升级了android sdk 22</p>
+<p>要用gradle构建你的有两种方式：（<strong>build.gradle 放到项目目录下</strong>）</p>
+<ol>
+<li>利用adt 22导出 build.gradle.</li>
+<li>复制别人写好的build.gradle 文件.</li>
+<li>根据gradle 规则，手写android 的build.gradle 文件。</li>
+</ol>
+<p>个人推荐1,2 方法。。。。</p>
+<p>一个android build.gradle 最基本基本文件</p>
+<pre><code>buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath &#39;com.android.tools.build:gradle:0.4&#39;
+    }
+}
+
+apply plugin: &#39;android&#39;
+
+dependencies {
+}
+
+android {
+
+    compileSdkVersion 17
+    buildToolsVersion &quot;17&quot;
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 17
+    }
+    sourceSets {
+        main {
+            manifest.srcFile &#39;AndroidManifest.xml&#39;
+            java.srcDirs &#x3D; [&#39;src&#39;]
+            resources.srcDirs &#x3D; [&#39;src&#39;]
+            aidl.srcDirs &#x3D; [&#39;src&#39;]
+            renderscript.srcDirs &#x3D; [&#39;src&#39;]
+            res.srcDirs &#x3D; [&#39;res&#39;]
+            assets.srcDirs &#x3D; [&#39;assets&#39;]
+        }
+
+        instrumentTest.setRoot(&#39;tests&#39;)
+    }
+}</code></pre>
+
+<p>接着在命令行cd 到项目目录下</p>
+<blockquote>
+<p>例如: cd e:\workplace\andoridGradle</p>
+</blockquote>
+<p>如果你是第一次使用gradle 构建android项目建议你先使用<code>gradle clean</code> 把android gradle 插件，还有相关依赖包下载下来并且对环境进行初始化，如果出错了，一般可能是下载超时，试多几次即可，最后你会看到如下提示：<code>BUILD SUCCESSFUL</code></p>
+<p>The TaskContainer.add() method has been deprecated and is scheduled to be remove<br>d in Gradle 2.0. Please use the create() method instead.</p>
+<p>:clean UP-TO-DATE</p>
+<p>BUILD SUCCESSFUL</p>
+<p>Total time: 7.847 secs</p>
+<p>完成以上的步骤，就可以正式使用gralde 构建你的android项目了。</p>
+<p>然后使用<code>gradle build</code> 就完成了android 项目的构建了。如果，你是照着以上步骤走的话，你将会想项目目录里面看到一个build 的目录，里面就是用gradle 构建android项目的全部例如了，结构目录看附录。</p>
+<p>最终打包的apk 就在build&#x2F;apk 目录下了。然后，你会发现，两个apk 一个是</p>
+<ul>
+<li>[项目名]-debug-unaligned</li>
+<li>[项目名]-release-unsigned</li>
+</ul>
+<p>如果以上内容你都掌握的话，接下来就将详细说说如何利用gralde 打包android apk。<br>##Gralde 打包参数详解##<br>上面说了一大堆东西，其实并不吸引人去使用gradle，如果只是构建项目的话，adt不是更合适吗？如果，你看完以下内容还是这么觉得的话，你就没必要折腾gradle了。。。。。。</p>
+<p>###打签名包###</p>
+<p>看附录 默认输出 <em>release</em> apk 是没有签名的，那么我们需要签名的很简单，只需要在android{}里面补充加上加上即可。完整<a target="_blank" rel="noopener" href="https://gist.github.com/youxiachai/5608223">build.gradle 请点击我的gist</a></p>
+<pre><code>signingConfigs {
+   myConfig{
+     storeFile file(&quot;gradle.keystore&quot;)
+    	storePassword &quot;gradle&quot;
+    	keyAlias &quot;gradle&quot;
+    	keyPassword &quot;gradle&quot;
+    }
+}
+    
+   buildTypes{
+     release {
+    	signingConfig  signingConfigs.myConfig
+     } 
+   }
+ </code></pre>
+<p>然后，运行<code>gradle clean</code> <code>gradle build</code> ,这次在build&#x2F;apk  你看到了多了一个[项目名]-release-unaligned， 从字面上面我就可以知道，这个只是没有进行zipAlign 优化的版本而已。而[项目名]-release 就是我们签名，并且zipAlign 的apk包了.</p>
+<p>###打混淆包###</p>
+<p>只需要在原来的基础上加上，完整的<a target="_blank" rel="noopener" href="https://gist.github.com/youxiachai/5608223">proguad.gradle 代码</a></p>
+<pre><code>buildTypes{
+   release {
+   signingConfig  signingConfigs.myConfig
+     runProguard true
+     proguardFile &#39;proguard-android.txt&#39;
+   }
+}
+</code></pre>
+
+<p><code>gradle clean</code></p>
+<p><code>gradle build</code></p>
+<p>###打多渠道包(Product Flavor)###</p>
+<p>现在来解释一下上一节的问题，<strong>apk目录下的两个apk 的含义</strong></p>
+<p><strong>为什么产生了两个apk？</strong></p>
+<p>默认的android gralde 插件定义了两种apk 的类型<strong>debug</strong>, <strong>release</strong>，这两种类型的详细对比看附录。</p>
+<p>这个是android gralde 插件 <code>buildTypes&#123;&#125;</code> 方法产生的，默认配置好了两个默认模板，当然你也可以修改，前面我们就是在修改默认的release 的配置，让输出release类型的的apk，具有签名和混淆。</p>
+<p>对于多渠道包，android 插件提供了一个名为<code>Product Flavor&#123;&#125;</code> 的配置，用于进行多渠道打包。</p>
+<p>例如，我的android应用有海外版，和国内版本，而且这两个版本的包名是不一样的！！（我就举两个市场的例子安装这个思路，你要打包100个不同的市场只是几行代码的事情。）。</p>
+<p>你只需要在<code>android&#123;&#125;</code> 补充上</p>
+<pre><code>productFlavors {
+	playstore {
+			packageName&#x3D;&#39;com.youxiachai.androidgradle.playstore&#39;
+	}
+	hiapk {
+			packageName&#x3D;&#39;com.youxiachai.androidgradle.amazonappstore&#39;
+	}
+}</code></pre>   
+
+<p>然后<code>gradle clean</code>,<code>gradle build</code>,在build&#x2F;apk 下面你会看到一堆的包，命名格式[项目名]-[渠道名]-release</p>
+<p><strong>仅此而已?</strong></p>
+<p><code>Product Flavor&#123;&#125;</code> 不只是能改包名那么简单，还能够对编译的源码目录进行切换。</p>
+<p>什么意思? 不知道各位有没有用过友盟做用户统计，如果，你用的是分发渠道分析，你需要修改AndroidManifest.xml 添加上<br><code> &lt;meta-data android:value=&quot;hiapk&quot; android:name=&quot;UMENG_CHANNEL&quot;/&gt;</code></p>
+<p>如果，你很多渠道，，然后你就会很痛苦，现在用gradle 就非常舒服，你只需要在<code>android.sourceSets</code>指定我们的渠道名就行，android  gradle 插件，会自动打包！！！例如</p>
+<pre><code>sourceSets {
+    main {
+        manifest.srcFile &#39;AndroidManifest.xml&#39;
+        java.srcDirs &#x3D; [&#39;src&#39;]
+        resources.srcDirs &#x3D; [&#39;src&#39;]
+        aidl.srcDirs &#x3D; [&#39;src&#39;]
+        renderscript.srcDirs &#x3D; [&#39;src&#39;]
+        res.srcDirs &#x3D; [&#39;res&#39;]
+        assets.srcDirs &#x3D; [&#39;assets&#39;]
+    }
+        
+    hiapk {
+      	manifest.srcFile &#39;hiapk&#x2F;AndroidManifest.xml&#39;
+    }    	
+       	playstore {
+       		manifest.srcFile &#39;hiapk&#x2F;AndroidManifest.xml&#39;
+    }
+       
+	instrumentTest.setRoot(&#39;tests&#39;)
+        
+}</code></pre>
+<p>然后运行<code>gradle clean</code>,<code>gradle build</code>,省下的时间去喝杯咖啡，睡个觉什么的都好。。。</p>
+<p>###外部依赖###<br>android gradle 对于外部jar 包的应用支持maven&#x2F;ivy 管理的包，也支持指定具体文件，前面已经在上文说过。上面演示的完整 build.gradle gist 里面也有写。你需要加上如下代码即可：</p>
+<pre><code>dependencies {
+	compile files(&#39;libs&#x2F;android-support-v4.jar&#39;)
+}</code></pre> 
+
+<p>##结语##</p>
+<p>至此，对于用android gradle 构建android应用程序，打包android 程序，所需要的所有知识，在以上已经说明，只要你是认真看上面文章的，对于，如何打依赖于android library project 的包，可以看附录提供的那个德国人写的例子，而对于<code>build.gradle</code> 里面的代码你需要把<code>0.2</code>, 改为<code>0.4</code>即可。至于用gradle 运行android test case部分的教程，个人感觉写了也白写（我写过关于andorid 测试相关的文章，也录制过视频，所以有这个感觉。），估计不会有人关注，所以，如果你对用gradle 进行android test的话，可以看附录里面提供的官方gradle手册。</p>
+<p>##扩展阅读##</p>
+<p> 对于这部分内容，你读与不读，并不影响你使用gradle 打包android 项目。至于读了的好处就是你能够更好的使用gradle。。</p>
+<ul>
+<li><p>完整的<a target="_blank" rel="noopener" href="http://tools.android.com/tech-docs/new-build-system/user-guide">Gradle Plugin User Guide</a> 其中里面有个错误是<code>compile files(&#39;libs/android-support-v4.jar&#39;)</code> 不是<code>compile file(&#39;libs/android-support-v4.jar&#39;)</code> 教程是基于android gradle0.3 ，在0.4中只是多了<strong>混淆打包，这块已经在文中补充了。</strong></p>
+</li>
+<li><p>一个德国人写的<a target="_blank" rel="noopener" href="https://github.com/Goddchen/Android-Gradle-Examples">Android-Gradle-Examples</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html"><code>dependencies&#123;&#125;</code></a> 更多的介绍。</p>
+</li>
+<li><p><strong>debug</strong>, <strong>release</strong>,这两种类型的默认配置如下：</p>
+<table cellspacing="0" bordercolor="#888" border="1" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px"><tbody><tr><td style="width:198px;height:19px">&nbsp;Property name</td><td style="width:195px;height:19px">&nbsp;Default values for debug</td><td style="width:241px;height:19px">&nbsp;Default values for release / other</td></tr><tr><td style="width:198px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>debuggable</b></font></td><td style="width:195px;height:20px">&nbsp;true</td><td style="width:241px;height:20px">&nbsp;false</td></tr><tr><td style="width:198px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>jniDebugBuild</b></font></td><td style="width:195px;height:20px">&nbsp;false</td><td style="width:241px;height:20px">&nbsp;false</td></tr><tr><td style="width:198px;height:19px">&nbsp;<b><font face="courier new, monospace" color="#38761d">renderscriptDebugBuild</font></b></td><td style="width:195px;height:19px">&nbsp;false</td><td style="width:241px;height:19px">&nbsp;false</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">renderscriptOptimLevel</font></b></td><td style="width:195px;height:20px">&nbsp;3</td><td style="width:241px;height:20px">&nbsp;3</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">packageNameSuffix</font></b></td><td style="width:195px;height:20px">&nbsp;null</td><td style="width:241px;height:20px">&nbsp;null</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">versionNameSuffix</font></b></td><td style="width:195px;height:20px">&nbsp;null</td><td style="width:241px;height:20px">&nbsp;null</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">signingConfig</font></b></td><td style="width:195px;height:20px">&nbsp;android.signingConfigs.debug</td><td style="width:241px;height:20px">&nbsp;null</td></tr><tr><td style="width:198px;height:20px">&nbsp;<b><font face="courier new, monospace" color="#38761d">zipAlign</font></b></td><td style="width:195px;height:20px">&nbsp;false</td><td style="width:241px;height:20px">&nbsp;true</td></tr></tbody></table>
+
+</li>
+<li><p><strong>defaultConfig {}</strong> 配置参数列表</p>
+<table cellspacing="0" bordercolor="#888" border="1" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px"><tbody><tr><td style="width:208px;height:19px">&nbsp;Property Name</td><td style="width:168px;height:19px">&nbsp;Default value in DSL object</td><td style="width:251px;height:19px">&nbsp;Default value</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>versionCode</b></font></td><td style="width:168px;height:20px">&nbsp;-1</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>versionName</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>minSdkVersion</b></font></td><td style="width:168px;height:20px">&nbsp;-1</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>targetSdkVersion</b></font></td><td style="width:168px;height:20px">&nbsp;-1</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>packageName</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;value from manifest if present</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>testPackageName</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;app package name + “.test”</td></tr><tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>testInstrumentationRunner</b></font></td><td style="width:168px;height:20px">&nbsp;null</td><td style="width:251px;height:20px">&nbsp;android.test.InstrumentationTestRunner</td></tr><tr><td style="width:208px;height:19px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>signingConfig</b></font></td><td style="width:168px;height:19px">&nbsp;null</td><td style="width:251px;height:19px">&nbsp;null</td></tr>
+<tr><td style="width:208px;height:20px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>runProguard</b></font></td><td style="width:168px;height:20px">&nbsp;false</td><td style="width:251px;height:20px">&nbsp;false</td></tr>
+<tr><td style="width:208px;height:19px">&nbsp;<font face="courier new, monospace" color="#38761d"><b>proguardFile</b></font></td><td style="width:168px;height:19px">&nbsp; 'proguard-android.txt' or 'proguard-android-optimize.txt'</td><td style="width:251px;height:19px">&nbsp; 'proguard-android.txt' or 'proguard-android-optimize.txt'</td></tr>
+</tbody></table>
+</li>
+<li><p>build 结构目录</p>
+<pre><code>build&#x2F;
+├── apk
+├── assets
+│   ├── debug
+│   └── release
+├── classes
+│   ├── debug
+│   │   └── com
+│   │       └── example
+│   │           └── gradle
+│   └── release
+│       └── com
+│           └── example
+│               └── gradle
+├── dependency-cache
+│   ├── debug
+│   └── release
+├── incremental
+│   ├── aidl
+│   │   ├── debug
+│   │   └── release
+│   ├── dex
+│   │   ├── debug
+│   │   └── release
+│   ├── mergeAssets
+│   │   ├── debug
+│   │   └── release
+│   └── mergeResources
+│       ├── debug
+│       └── release
+├── libs
+├── manifests
+│   ├── debug
+│   └── release
+├── res
+│   ├── all
+│   │   ├── debug
+│   │   │   ├── drawable-hdpi
+│   │   │   ├── drawable-mdpi
+│   │   │   ├── drawable-xhdpi
+│   │   │   ├── drawable-xxhdpi
+│   │   │   ├── layout
+│   │   │   ├── menu
+│   │   │   ├── values
+│   │   │   ├── values-sw720dp-land
+│   │   │   ├── values-v11
+│   │   │   └── values-v14
+│   │   └── release
+│   │       ├── drawable-hdpi
+│   │       ├── drawable-mdpi
+│   │       ├── drawable-xhdpi
+│   │       ├── drawable-xxhdpi
+│   │       ├── layout
+│   │       ├── menu
+│   │       ├── values
+│   │       ├── values-sw720dp-land
+│   │       ├── values-v11
+│   │       └── values-v14
+│   └── rs
+│       ├── debug
+│       └── release
+├── source
+│   ├── aidl
+│   │   ├── debug
+│   │   └── release
+│   ├── buildConfig
+│   │   ├── debug
+│   │   │   └── com
+│   │   │       └── example
+│   │   │           └── gradle
+│   │   └── release
+│   │       └── com
+│   │           └── example
+│   │               └── gradle
+│   ├── r
+│   │   ├── debug
+│   │   │   └── com
+│   │   │       └── example
+│   │   │           └── gradle
+│   │   └── release
+│   │       └── com
+│   │           └── example
+│   │               └── gradle
+│   └── rs
+│       ├── debug
+│       └── release
+└── symbols
+    ├── debug
+    └── release
+88 directories</code></pre></li>
+</ul>
+<p>##最后的吐槽##<br>吐槽一下。。。用ant脚本的（也许你没有接触过。。）。在以前你用ant 脚本打包apk的时候需要打包不同包名，你需要用ant 读取<code>AndroidManifest.xml</code> 然后又正则匹配替换里面packagename 参数。。虽然描述得过程很简单，你真去写的时候你就蛋疼了（对于一个ant外行人来说，个人感觉ant的学习曲线太陡峭了，如果是两年前的我，可能还写得出这样的ant脚本（当年费了很大的功夫学习了一个多星期），不过，因为很少用到（后来知道maven了。。果断放弃了ant，为什么不在android使用maven？ 因为，android 的maven 插件式非官方的，而且现在看来maven 的xml实在很复杂，看起来就头疼））*</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2013/05/22/android/androidaccess/" title="移动应用使用场景边界测试笔记"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: 移动应用使用场景边界测试笔记</span></a><a class="button is-default" href="/2013/05/10/android/andoridnotifylesson/" title="Android 新Notification api 介绍"><span class="has-text-weight-semibold">下一页: Android 新Notification api 介绍</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><div id="disqus_thread"></div><article class="mt-6 comment-container" id="disqus"><script>var disqus_config = function () {this.page.url = 'https://blog.gfdsa.net//2013/05/19/android/android4gradle/';this.page.identifier = 'bloggfdsanet';};</script><script>(function() {var d = document, s = d.createElement('script');s.src = 'https://bloggfdsanet.disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();</script><script id="dsq-count-scr" src="//blog-pubgj2togw.disqus.com/count.js" async></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com/Tom_achai"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/youxiachai"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> youxiachai 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

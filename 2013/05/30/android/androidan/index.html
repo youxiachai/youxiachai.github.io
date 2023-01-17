@@ -1,0 +1,207 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>Android 应用的动画实践--View Animation篇</title><meta name="description" content="一个在IT业界打杂的程序猿"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-31013178-1', 'auto');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '75f5de70aa60d9d2b194636cd8b7b621';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="##前言##尝试搜索了一下android 动画的中文资料，很多都是一些枯燥的翻译api的一些文档，很少有系统讲解如何利用动画开发一个应用的资料，忽然，发现很多应用也不怎么注重动画在app的应用，想了想，自己尝试总结一下吧。因为，本人也不是什么动画制作师，没法把动画做得很绚丽，只好，利用内置的效果，进行简单加工，如何发挥，由各位的创意来定。鉴于，很多有关的android的动画资料里面，都是堆代码的，所以，全部代码均放在了github上面，查看完整代码可以移步到github上面去。
+特地说明一下，由于android 模拟器和录制工具的原因，例子展示中的gif 的抽筋播放效果不等同于实际效果，自己脑补把抽筋的部分去掉
+
+##android 动画基础##
+在Android 里你能够使用的动画效果：
+
+平移
+
+缩放
+.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">youxiachai's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Android 应用的动画实践--View Animation篇</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/aboutme.html">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile is-hidden"></div><div class="column is-9"><header class="my-4"><a href="/tags/android"><i class="tag post-item-tag">android</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Android 应用的动画实践--View Animation篇</h1><time class="has-text-grey" datetime="2013-05-29T16:00:00.000Z">5月 30 2013</time><article class="mt-2 post-content"><p>##前言##<br>尝试搜索了一下android 动画的中文资料，很多都是一些枯燥的翻译api的一些文档，很少有系统讲解如何利用动画开发一个应用的资料，忽然，发现很多应用也不怎么注重动画在app的应用，想了想，自己尝试总结一下吧。因为，本人也不是什么动画制作师，没法把动画做得很绚丽，只好，利用内置的效果，进行简单加工，如何发挥，由各位的创意来定。鉴于，很多有关的android的动画资料里面，都是堆代码的，所以，<a target="_blank" rel="noopener" href="https://github.com/youxiachai/AnimUtils">全部代码均放在了github上面，查看完整代码可以移步到github上面去</a>。</p>
+<p><strong>特地说明一下，由于android 模拟器和录制工具的原因，例子展示中的gif 的抽筋播放效果不等同于实际效果，自己脑补把抽筋的部分去掉</strong></p>
+<span id="more"></span>
+<p>##android 动画基础##</p>
+<p>在Android 里你能够使用的动画效果：</p>
+<ul>
+<li><p>平移</p>
+</li>
+<li><p>缩放</p>
+</li>
+<li><p>旋转</p>
+</li>
+<li><p>透明</p>
+</li>
+</ul>
+<p>以上动画的基本使用就是本文的内容了。由于，本人的能力问题，实在搞不出让人眼前一亮的动画，就凑合着看着吧。不过，那些令人赞叹的动画效果的基础就是这些。</p>
+<p>###Interpolators（插值器）###</p>
+<p>一般而言，要做动画的，需要封装点物理公式，用作为计算帧与帧间的数值计算，不过，如果，只是，为了搞些动画让app好用一些，倒不需要搞得这么复杂，android 官方api 已经封装好了一些常用的动画插值器。</p>
+<p>默认内置7种类型的插值器，个人觉得，如果只是应用里面的一些动画的话这7个就够用了。</p>
+<ol>
+<li><p>AccelerateInterpolator</p>
+<blockquote>
+<p> 加速 <br/><br><img src="/images/androidanim/AccelerateInterpolator.gif" alt="AccelerateInterpolator"></p>
+</blockquote>
+</li>
+<li><p>Decelerate</p>
+<blockquote>
+<p> 减速 <br/><br><img src="/images/androidanim/decelerate.gif" alt="decelerate"></p>
+</blockquote>
+</li>
+<li><p>AccelerateDecelerateInterpolator</p>
+<blockquote>
+<p>开始，和结尾都很慢，但是，中间加速<br/><br><img src="/images/androidanim/accelerate_decelerate.gif" alt="accelerate_decelerate"></p>
+</blockquote>
+</li>
+<li><p>AnticipateInterpolator</p>
+<blockquote>
+<p>开始向后一点，然后，往前抛<br/><br><img src="/images/androidanim/anticipate.gif" alt="anticipate"></p>
+</blockquote>
+</li>
+<li><p>OvershootInterpolator</p>
+<blockquote>
+<p>往前抛超过一点，然后返回来<br/><br><img src="/images/androidanim/overshoot.gif" alt="overshoot"></p>
+</blockquote>
+</li>
+<li><p>AnticipateOvershootInterpolator</p>
+<blockquote>
+<p>开始向后一点，往前抛过点，然后返回来<br/><br><img src="/images/androidanim/anticipate_overshoot.gif" alt="anticipate_overshoot"></p>
+</blockquote>
+</li>
+<li><p>BounceInterpolator</p>
+<blockquote>
+<p>结束的时候弹一下<br/><br><img src="/images/androidanim/bounce.gif" alt="bounce"></p>
+</blockquote>
+</li>
+<li><p>LinearInterpolator</p>
+<blockquote>
+<p>匀速</p>
+</blockquote>
+</li>
+</ol>
+<p>以上动画都源自android官方api demo，用eclipse adt android 选择例子项目导航，然后，选择APIDEMOS 就能创建（什么没听说过？现在知道了吧。。。）</p>
+<p>好了，虽然截取的gif 动画播放起来有点抽筋的感觉，接下来我们该如何在应用中使用这些知识呢？</p>
+<p>###组合动画###<br><strong>目前讲解动画api 的资料比较多，这里就不在重复那些基础的知识了！</strong></p>
+<p>现在让我们学习一下，如何利用，平移，缩放，旋转创造出让人眼前一亮的动画.</p>
+<p>为了，更有目的的使用动画，下面假想一个使用场景。</p>
+<p>####假想：商品购物车案例####</p>
+<blockquote>
+<p>Notice :为了方便看效果，动画延时时间将会设置的比较长。特地说明一下：假想就是随便想，切勿对号入座。</p>
+</blockquote>
+<p>任务：</p>
+<p>为了，让商城app有更好的交互效果，决定对购物车控件和商品控件上面加一些动画效果。</p>
+<p>购物车动画设计方案：</p>
+<p>利用，透明，平移，对购物车的出现和离开增加动画交互效果。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/youxiachai/AnimUtils/blob/master/AnimUtils/res/anim/in_translate_top.xml">经过一番努力效果如下(凑合着看吧。。)：</a></p>
+<blockquote>
+<p><img src="/images/androidanim/anim1.gif" alt="anim1"></p>
+</blockquote>
+<p>####相关知识点####<br>一些动画常用的通用基础属性：</p>
+<blockquote>
+<p>Notice: 所谓通用就是说所有动画标签都适用于这些属性</p>
+</blockquote>
+<ul>
+<li><code>android:duration</code> 设置动画播放的时间</li>
+<li><code>android:startOffset</code> 设置动画的开始播放时间</li>
+<li><code>andorid:interpolator</code> 设置动画的插值器</li>
+<li><code>android:repeatCount</code> 动画播放的常用次数</li>
+<li><code>android:repeatMode</code> 动画重播的模式，即从头到尾，从头到尾，还是从头到尾，在从尾到头。</li>
+</ul>
+<p>透明的使用:</p>
+<p><code>&lt;alpha /&gt;</code></p>
+<blockquote>
+<p>value 从 0 （透明） 到 1 （不透明）<br>在android中透明主要用于对view 淡入，淡出的效果控制主要有两个属性</p>
+</blockquote>
+<ul>
+<li><code>android:fromAlpha</code> view在动画开始的透明度。</li>
+<li><code>android:toAlpha</code>  view在动画结束的透明度。</li>
+</ul>
+<p>平移的使用：</p>
+<p><code>&lt;translate /&gt;</code></p>
+<blockquote>
+<p>支持使用 %，如 “50%“ 获取的是这个view的百分之50，除此之外还有另外一种写法：”50%p“ 意思是获取这个view的上一级view的百分之50 当然，指定特定值也是支持的“22.2”，不过为了兼容更多的android设备建议还是使用百分比的值。</p>
+</blockquote>
+<ul>
+<li><p><code>android:fromXDelta</code> </p>
+</li>
+<li><p><code>android：fromYDelta</code></p>
+<blockquote>
+<p>from?Delta 意思是开始的轴线</p>
+</blockquote>
+</li>
+<li><p><code>android:toXDelta</code></p>
+</li>
+<li><p><code>android：toYDelta</code> </p>
+<blockquote>
+<p>to?Delta 意思是结束的轴线</p>
+</blockquote>
+</li>
+</ul>
+<p>这次的方案展示了两个插值器的使用：</p>
+<p>用于出现的：BounceInterpolator</p>
+<p>用于离开的： AnticipateInterpolator</p>
+<p>###什么是插值器？###<br>所谓插值器就是用于数值的起始间的变化，就是相当于一个类似于物理引擎的东西。android官方内置了一些简单常用的数值变换，让我们，不需要去学习相关的物理知识。</p>
+<p>例如：</p>
+<p>开始值为1，结束值为 100.那么我们如何控制变化这个值的变化过程呢？这里就是插值器的使用。</p>
+<p>一般匀速的话就是：</p>
+<p>1,2,3,4,5…100。 然后我们就会看到物体以一个匀速的速度进行平移操作。</p>
+<p>那么我们需要物体像汽车那样加速度的前进，我们可以用加速插值器，我们从1到100的过程，就会是：</p>
+<p>1,2,4,5,8，16.。。。。100 展示在我们面前的view对象就会以一个加速度的形式进行平移。</p>
+<p>有很多应用开发者并不熟悉动画制作的一些基础知识，可能不太明白。现在，通过对源码进行分析，来彻底搞明白这个概念。</p>
+<p>我们分析一些Interpolator 类树：</p>
+<p>从api文档<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/animation/TimeInterpolator.html">TimeInterpolator</a> 我们可以知道，这个插值器的实现只有一个方法：</p>
+<blockquote>
+<p><code>getInterpolation(float t);</code></p>
+</blockquote>
+<p>然后我们挑选前面用过的<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/view/animation/BounceInterpolator.java">BounceInterpolator</a> 看下，它是如何实现这个方法。如果感兴趣的，可以按照这种方法，把其他几个插值器的实现都看一遍。</p>
+<p>最后我们会发现，插值器的作用就是返回值。</p>
+<p>接着我们来看下<a target="_blank" rel="noopener" href="https://github.com/android/platform_frameworks_base/blob/master/core/java/android/view/animation/Animation.java">Animation line:869</a> 是怎么用这个接口的. </p>
+<p>看完这这几个地方，相信应该对android 动画框架怎么对值进行变换的原理应该有所了解。</p>
+<p>有了以上知识，我们对android的动画框架基本上已经完全了解，现在，我们利用学到的知识，进行更好的动画设计。</p>
+<p>我们接着刚才的案例，着手设计商品控件的动画设计</p>
+<p>商品动画设计：</p>
+<p>这次，我们学习一个新的动画标签缩放(<code>&lt;scale&gt;</code>)</p>
+<p>效果如下：</p>
+<p><img src="/images/androidanim/shop1.gif" alt="shop1"></p>
+<p><code>&lt;scale /&gt;</code></p>
+<blockquote>
+<p>使view 大点或者小点</p>
+</blockquote>
+<ul>
+<li><p><code>android:fromXScale</code> </p>
+</li>
+<li><p><code>android：fromYScale</code></p>
+<blockquote>
+<p>from?Scale 意思是开始轴线的缩放比例（默认 1.0）</p>
+</blockquote>
+</li>
+<li><p><code>android:toXScale</code></p>
+</li>
+<li><p><code>android：toYScale</code> </p>
+<blockquote>
+<p>to?Scale 意思是结束轴线的缩放比例（默认 1.0）</p>
+</blockquote>
+</li>
+<li><p><code>android:pivotX</code></p>
+</li>
+<li><p><code>android:pivotX</code></p>
+<blockquote>
+<p> 旋转用的轴点坐标</p>
+</blockquote>
+</li>
+</ul>
+<p>最后我们把购物车的动画，和商品的动画在组合起来。效果如下：</p>
+<p>添加商品的时候，如果购物车还没出现，先出现购物车显示的动画，在进行商品的动画播放。<a target="_blank" rel="noopener" href="https://github.com/youxiachai/AnimUtils/blob/master/AnimUtilsExample/src/com/youxiachai/animutils/example/MainActivity.java">具体实现 line: 77 -104</a></p>
+<p><img src="/images/androidanim/shop2.gif" alt="shop2"></p>
+<p>这次我们学习一下如何监听动画的动作，对于<code>AnimationListener()</code>主要有三个</p>
+<ul>
+<li><p><code>onAnimationStart(Animation animation)</code></p>
+</li>
+<li><p><code>onAnimationRepeat(Animation animation)</code></p>
+</li>
+<li><p><code>onAnimationEnd(Animation animation)</code></p>
+</li>
+</ul>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2013/06/03/pomelo/pomelo_study_one/" title="Pomelo 一周之旅--星期一"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: Pomelo 一周之旅--星期一</span></a><a class="button is-default" href="/2013/05/22/android/android4gradledenp/" title="用Gradle 构建你的android程序-依赖管理篇"><span class="has-text-weight-semibold">下一页: 用Gradle 构建你的android程序-依赖管理篇</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><div id="disqus_thread"></div><article class="mt-6 comment-container" id="disqus"><script>var disqus_config = function () {this.page.url = 'https://blog.gfdsa.net//2013/05/30/android/androidan/';this.page.identifier = 'bloggfdsanet';};</script><script>(function() {var d = document, s = d.createElement('script');s.src = 'https://bloggfdsanet.disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();</script><script id="dsq-count-scr" src="//blog-pubgj2togw.disqus.com/count.js" async></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com/Tom_achai"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/youxiachai"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> youxiachai 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

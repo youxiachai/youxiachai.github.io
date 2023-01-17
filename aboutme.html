@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume by youxiachai</title>
+    <meta charset="utf-8"/>
+    <!--[if lte IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        header {
+            height: 65px;
+            margin-top: 30px;
+        }
+
+        #gallary {
+            height: 540px;
+        }
+
+        section {
+            height: 440px;
+        }
+
+        footer {
+            height: 210px;
+        }
+
+        nav {
+            display: inline;
+            float: right;
+        }
+
+        nav span {
+            border-right: 2px solid;
+            border-color: #cacaca;
+            padding-right: 50px;
+        }
+
+        nav span a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        nav span a:hover {
+            color: #00aeff;
+        }
+
+
+    </style>
+    <style>
+        button {
+            background-color: #00aeff;
+            border: 0;
+            color: #ffffff;
+            border-radius: 5px;
+            height: 60px;
+            width: 210px;
+            position: relative;
+            margin: 50px;
+        }
+
+        .devices {
+            position: relative;
+            width: 728px;
+            margin: 0 auto;
+        }
+
+        img {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+
+    </style>
+    <script src="js/holder.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+<header>
+    <div style="display: inline;position: relative;left: 100px">
+        <h1 style="display: inline;position: relative;">游任远</h1>
+    </div>
+    <nav>
+        <span><a href="http://blog.gfdsa.net" target="_blank">Blog</a></span>
+        <span><a href="mailto:youxiachai@gmail.com?Subject=contact" target="_blank">Contact me</a></span>
+    </nav>
+
+</header>
+
+<div id="gallary" style="background-color: #31333e;height: 540px; width: 960px">
+
+    <p style="text-align: center">
+        <a href="#myapps">
+            <button><h1>作品集</h1></button>
+        </a>
+    </p>
+
+    <div class="devices">
+        <img src="img/macbook.png" style="position:absolute;left:0;top:30px;"/>
+        <a href="http://42.121.117.150:10000/browse" target="_blank"><img src="img/showcase/webapp_library.png" style="position:absolute;left:118px;top:53px;"/></a>
+        <img src="img/iphone.png" style="position:absolute;left:0;top:120px"/>
+        <a href="http://pan.baidu.com/share/link?shareid=1753263198&uk=3254931896" target="_blank"><img src="img/showcase/mobileapp_girl.png" style="position:absolute;left:44px;top:165px;"/></a>
+    </div>
+
+</div>
+
+<section style="background-color: #ffffff;height: 240px" id="myapps">
+    <article style="width: 940px;margin: 0 auto;padding: 0;position: relative;top: 60px;left: 10px">
+        <div style="width: 300px;display: inline;position:absolute;text-align: center">
+            <h1 style="margin-bottom: 20px">Web Design</h1>
+            <a href="#webapp">
+                <img src="img/app/webapp.png">
+            </a>
+        </div>
+
+        <div style="width: 300px;display: inline;position:absolute;left: 300px;text-align: center">
+            <h1 style="margin-bottom: 20px">Social Media</h1>
+            <a href="#social">
+                <img src="img/app/social.png">
+            </a>
+        </div>
+
+        <div style="width: 300px;display: inline;position:absolute;left: 600px;text-align: center">
+            <h1 style="margin-bottom: 20px">Mobile App</h1>
+            <a href="#androidapp">
+                <img src="img/app/mobileapp.png">
+            </a>
+        </div>
+    </article>
+</section>
+
+<section style="background-color: #e2e7ed;height: 600px">
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        article a {
+            color: #ffffff;
+        }
+
+        article a .overlay {
+            background: rgba(39, 159, 196, 0.85);
+            opacity: 0;
+            transition: opacity 0.25s ease 0s;
+        }
+
+        article a .overlay:hover {
+            opacity: 1;
+        }
+    </style>
+
+    <article style="width: 930px;margin: 0 auto;padding-top: 10px;">
+
+
+        <div>
+            <a href="http://42.121.117.150/renyuan/todoList/" target="_blank" style="position:  relative;width: 300px;height: 158px;display: table-cell">
+                <img src="img/webapps/webapp_todolist.jpg" style="position:  absolute;">
+            <span class="overlay" style="position:  absolute;width: 300px;height: 158px">
+                 Backbone.js 实现的html5 离线APP</span>
+            </a>
+
+
+            <a href="http://42.121.117.150:10003/" target="_blank" style="position:  relative;width: 300px;height: 180px;display: table-cell">
+                <img src="img/webapps/webapp_osctranslate.png" style="position:  absolute;">
+            <span class="overlay" style="position:  absolute;width: 300px;height: 180px">
+                Node.js + leveldb 构建的html5版本的oschina翻译频道 </span>
+            </a>
+
+            <a href="http://42.121.117.150:3001/" target="_blank" style="position:  relative;width: 300px;height: 159px;display: table-cell">
+                <img src="img/webapps/webapp_pomelopush.png" style="position:  absolute;">
+            <span class="overlay" style="position:  absolute;width: 300px;height: 159px">
+                Node.js + Pomelo 实现的推送平台</span>
+            </a>
+
+        </div>
+
+        <div>
+
+            <a href="http://42.121.117.150:10005/" target="_blank" style="position:  relative;width: 300px;height: 100px;display: table-cell">
+                <img src="img/webapps/webapp_soundsfinder.jpg" style="position:  absolute;">
+            <span class="overlay" style="position:  absolute;width: 300px;height: 100px">
+                Node.js + Sqlite 构建的游戏音效搜索应用
+                </span>
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <article id="androidapp" style="width: 900px;margin: 0 auto;padding-top: 30px">
+
+        <a href="http://www.wandoujia.com/apps/com.minephone.babylisten" target="_blank" style="position: relative;width: 150px;height: 266px;">
+            <img src="img/mobileapp/mobile_listener.png" style="position:  absolute;">
+            <span class="overlay" style="position:  absolute;width: 150px;height: 266px">
+                故事宝贝</span>
+        </a>
+
+        <a href="http://bbs.carcav.com/soft/CarCAV.apk" target="_blank" style="position: relative;left: 150px;width: 150px;height: 266px;">
+            <img src="img/mobileapp/mobile_carcav.png" style="position:  absolute;">
+            <span class="overlay" style="position:  absolute;width: 150px;height: 266px">
+                中国汽车影院网android 客户端</span>
+        </a>
+
+    </article>
+</section>
+
+<div style="background-color: #ffffff;height: 140px;text-align: center" id="social">
+
+    <style>
+        div#social a {
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        div#social a .overlay {
+            background: rgba(39, 159, 196, 0.85);
+            opacity: 0;
+            transition: opacity 0.25s ease 0s;
+        }
+
+        div#social a .overlay:hover {
+            opacity: 1;
+        }
+    </style>
+
+    <div style="position: relative;top: 10px">
+        <h1 style="margin: 10px">
+            活跃在各大IT社区
+        </h1>
+
+        <a href="http://www.cnblogs.com/youxilua/" target="_blank" title="积分排名前1k" style="position: relative">
+            <img width="142" height="55" src="img/logo_cnblog.gif">
+            <span class="overlay" style="position: absolute;width: 142px;height: 55px;bottom: 5px">
+                 积分排名前1k
+            </span>
+        </a>
+
+        <a href="http://youxilua.blog.51cto.com/" target="_blank" title="推荐博客" style="position: relative">
+            <img width="263" height="62" src="img/logo_51.jpg">
+             <span class="overlay" style="position: absolute;width: 263px;height: 62px;bottom: 5px">
+                推荐博客
+            </span>
+        </a>
+
+        <a href="http://my.oschina.net/youxiachai" target="_blank" title="2w以上访问量" style="position: relative">
+            <img width="160" height="48" src="img/logo_oschina.png">
+             <span class="overlay" style="position: absolute;width: 160px;height: 48px;bottom: 5px">
+                累计访问量2w
+            </span>
+        </a>
+
+        <a href="http://cnodejs.org/user/youxiachai" target="_blank" title="积分前十" style="position: relative">
+            <img width="127" height="25" src="img/logo_cnodejs.png">
+             <span class="overlay" style="position: absolute;width: 127px;height: 30px;bottom: 3px">
+               积分排名前十
+            </span>
+        </a>
+    </div>
+</div>
+
+<footer style="background-color: #31333e;width: 960px;height: 90px">
+
+    <p style="color: rgb(226,231,237);position: relative;top: 50px;left: 100px">&copy; 2013 youxiachai All Rights
+        Reserved</p>
+
+    <div style="float: right;position: relative;right: 50px">
+        <a href="https://github.com/youxiachai" target="_blank" title="github">
+            <img width="48" height="48" src="img/foot/webicon-github.png">
+        </a>
+
+        <a href="https://plus.google.com/116184177208812253659/about" target="_blank" title="googleplus">
+            <img width="48" height="48" src="img/foot/webicon-googleplus.png">
+        </a>
+
+        <a href="https://twitter.com/Tom_achai" target="_blank" title="twitter">
+            <img width="48" height="48" src="img/foot/webicon-twitter.png">
+        </a>
+
+        <a href="http://weibo.com/u/1312972820" target="_blank" title="weibo">
+            <img width="48" height="48" src="img/foot/webicon-sina.png">
+        </a>
+    </div>
+</footer>
+</body>
+</html>
